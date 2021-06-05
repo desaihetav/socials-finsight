@@ -1,57 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { Counter, Login, Profile } from "./features";
+import "./App.css";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client";
+import { useAuth } from "./context/AuthProvider";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import "./App.css";
+
+const createApolloClient = (token) => {
+  return new ApolloClient({
+    link: new HttpLink({
+      uri: "https://social-finsight.hasura.app/v1/graphql",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    cache: new InMemoryCache(),
+  });
+};
 
 function App() {
+  const { userToken } = useAuth();
+  const client = createApolloClient(userToken);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <header className="App-header">
+          <Routes>
+            <Route path="/" element={<h1>Home</h1>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/counter" element={<Counter />} />
+          </Routes>
+        </header>
+      </div>
+    </ApolloProvider>
   );
 }
 
