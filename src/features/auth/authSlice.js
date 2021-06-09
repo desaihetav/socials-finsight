@@ -37,7 +37,7 @@ export const authSlice = createSlice({
     userId: JSON.parse(localStorage?.getItem("authUserId")) || null,
     isAuthenticated:
       JSON.parse(localStorage?.getItem("isAuthenticated")) || null,
-    user: {},
+    user: null,
   },
   reducers: {
     logoutUser: (state) => {
@@ -50,7 +50,7 @@ export const authSlice = createSlice({
         userToken: null,
         userId: null,
         isAuthenticated: false,
-        user: {},
+        user: null,
       };
     },
   },

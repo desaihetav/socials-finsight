@@ -5,7 +5,7 @@ import { Counter, Login, Profile, EditProfile } from "./features";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeUser } from "./features/auth/authSlice";
-import { PrivateRoute } from "./components";
+import { PrivateRoute, Sidebar } from "./components";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,14 +21,17 @@ function App() {
 
   return (
     <div className="bg-gray-900 min-h-screen text-gray-50 flex flex-col px-4">
-      <div className="w-full max-w-3xl mx-auto">
-        <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
-          <Route path="/login" element={<Login />} />
-          <PrivateRoute path="/profile" element={<Profile />} />
-          <Route path="/profile/edit" element={<EditProfile />} />
-          <Route path="/counter" element={<Counter />} />
-        </Routes>
+      <div className="w-full max-w-7xl mx-auto flex">
+        <Sidebar />
+        <div className="w-full">
+          <Routes>
+            <Route path="/" element={<h1>Home</h1>} />
+            <Route path="/login" element={<Login />} />
+            <PrivateRoute path="/profile" element={<Profile />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/counter" element={<Counter />} />
+          </Routes>
+        </div>
       </div>
     </div>
   );

@@ -16,6 +16,9 @@ export default function ProfileHeader() {
     following,
   } = user;
 
+  const names = name.split(" ");
+  const initials = (names[0][0] + names[1][0]).toUpperCase();
+
   const editButtonHandler = () => {
     navigate("/profile/edit");
   };
@@ -23,12 +26,13 @@ export default function ProfileHeader() {
   return (
     <div className="bg-gray-800 bg-opacity-75 p-6 mt-4 rounded-2xl">
       <div className="flex">
-        <div className="h-16 w-16 rounded-3xl bg-gray-700 flex items-center justify-center">
+        <div className="h-14 w-14 rounded-2xl bg-gray-700 flex items-center justify-center">
           {image_url ? (
-            <img className="h-16 w-16 rounded-3xl" src={image_url} alt={name} />
+            <img className="h-14 w-14 rounded-2xl" src={image_url} alt={name} />
           ) : (
             <span className="font-bold text-2xl">
-              {name.slice(0, 2).toUpperCase()}
+              {/* {name.slice(0, 2).toUpperCase()} */}
+              {initials}
             </span>
           )}
         </div>
@@ -44,27 +48,31 @@ export default function ProfileHeader() {
         </button>
       </div>
       {bio && <p className="mt-4 font-semibold">{bio}</p>}
-      {website_url && (
-        <div className="mt-4 flex items-center opacity-80">
-          <img className="h-4 w-4 mr-2" src="/icons/link.svg" alt="link" />
-          <p className="">{website_url}</p>
+      <div className="text-gray-300">
+        {website_url && (
+          <div className="mt-4 flex items-center">
+            <img className="h-4 w-4 mr-2" src="/icons/link.svg" alt="link" />
+            <a href={website_url} rel="noreferrer" target="_blank" className="">
+              {website_url}
+            </a>
+          </div>
+        )}
+        {location && (
+          <div className="mt-4 flex items-center">
+            <img
+              className="h-4 w-4 mr-2"
+              src="/icons/location.svg"
+              alt="location"
+            />
+            <p className="">{location}</p>
+          </div>
+        )}
+        <div className="mt-4 flex items-center">
+          <span className="mr-2">{following}</span>
+          <p className="mr-4">Following</p>
+          <span className="mr-2">{followers}</span>
+          <p className="mr-4">Followers</p>
         </div>
-      )}
-      {location && (
-        <div className="mt-4 flex items-center opacity-80">
-          <img
-            className="h-4 w-4 mr-2"
-            src="/icons/location.svg"
-            alt="location"
-          />
-          <p className="">{location}</p>
-        </div>
-      )}
-      <div className="mt-4 flex items-center opacity-80">
-        <span className="mr-2">{following}</span>
-        <p className="mr-4">Following</p>
-        <span className="mr-2">{followers}</span>
-        <p className="mr-4">Followers</p>
       </div>
     </div>
   );
