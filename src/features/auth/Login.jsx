@@ -1,38 +1,25 @@
 import { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
-import { gql, useQuery } from "@apollo/client";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserWithCredentials } from "../auth/authSlice";
 
 export default function Login() {
-  const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } =
-    useAuth0();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginHandler = async () => {
-    await loginWithRedirect();
-    const token = await getAccessTokenSilently();
-    console.log(token);
+    dispatch(
+      loginUserWithCredentials({
+        email: "hetav.desai20@gmail.com",
+        password: "pass123",
+      })
+    );
   };
 
-  // const FETCH_PRIVATE_TODOS = gql`
-  //   query fetchPrivateTodos {
-  //     todos {
-  //       id
-  //       title
-  //     }
-  //   }
-  // `;
-
-  // const { loading, error, data } = useQuery(FETCH_PRIVATE_TODOS);
-
-  // if (loading) return <h1>Loading...</h1>;
-
-  // console.log(data?.todos);
-
   useEffect(() => {
-    isAuthenticated && navigate("/");
-  }, [isAuthenticated]);
+    isAuthenticated && navigate("/profile");
+  }, [isAuthenticated, navigate]);
 
   return (
     <div>

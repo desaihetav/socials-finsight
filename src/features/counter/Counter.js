@@ -9,9 +9,8 @@ import {
   selectCount,
 } from "./counterSlice";
 import styles from "./Counter.module.css";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
 
-function Counter() {
+export default function Counter() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState("2");
@@ -66,7 +65,3 @@ function Counter() {
     </div>
   );
 }
-
-export default withAuthenticationRequired(Counter, {
-  onRedirecting: () => <h1>Loading...</h1>,
-});

@@ -1,0 +1,1 @@
+export const GRAPHQL_ENDPOINT = "https://social-finsight.hasura.app/v1/graphql"

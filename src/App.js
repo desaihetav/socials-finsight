@@ -1,46 +1,36 @@
-import React from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Counter, Login, Profile } from "./features";
+import axios from "axios";
+import { Counter, Login, Profile, EditProfile } from "./features";
 import "./App.css";
-import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  HttpLink,
-} from "@apollo/client";
-import { useAuth } from "./context/AuthProvider";
-import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
-import "./App.css";
-
-const createApolloClient = (token) => {
-  return new ApolloClient({
-    link: new HttpLink({
-      uri: "https://social-finsight.hasura.app/v1/graphql",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }),
-    cache: new InMemoryCache(),
-  });
-};
+import { useDispatch, useSelector } from "react-redux";
+import { initializeUser } from "./features/auth/authSlice";
+import { PrivateRoute } from "./components";
 
 function App() {
-  const { userToken } = useAuth();
-  const client = createApolloClient(userToken);
+  const dispatch = useDispatch();
+  const { status, userId, userToken } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (status === "tokenReceived") {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      console.log("dispatching with userId: ", userId);
+      dispatch(initializeUser(userId));
+    }
+  }, [status]);
 
   return (
-    <ApolloProvider client={client}>
-      <div className="App">
-        <header className="App-header">
-          <Routes>
-            <Route path="/" element={<h1>Home</h1>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/counter" element={<Counter />} />
-          </Routes>
-        </header>
+    <div className="bg-gray-900 min-h-screen text-gray-50 flex flex-col px-4">
+      <div className="w-full max-w-3xl mx-auto">
+        <Routes>
+          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/login" element={<Login />} />
+          <PrivateRoute path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/counter" element={<Counter />} />
+        </Routes>
       </div>
-    </ApolloProvider>
+    </div>
   );
 }
 
