@@ -1,11 +1,18 @@
+import { NavLink } from "react-router-dom";
 import { SidebarFooter, SidebarNavLink } from ".";
 
 export default function Sidebar() {
   return (
-    <div className="h-screen py-4 w-1/3 mr-6">
-      <div className="h-full w-full flex flex-col rounded-2xl bg-gray-800 bg-opacity-75">
-        <div className="p-6">
-          <p className="font-extrabold text-3xl mb-6">Finsight</p>
+    <div className="sm:h-screen py-4 mx-4 sm:mx-0">
+      <div className="h-full flex flex-col items-center md:items-start rounded-2xl bg-gray-800 bg-opacity-75">
+        <div className="w-full p-4 flex sm:flex-col justify-around sm:justify-items-start">
+          <NavLink className="hidden sm:block" to="/">
+            <img
+              className="mb-6 mx-auto"
+              src="/icons/finsight.svg"
+              alt="finsight logo"
+            />
+          </NavLink>
           <SidebarNavLink icon="/icons/home.svg" title="Home" link="/" />
           <SidebarNavLink
             icon="/icons/search.svg"

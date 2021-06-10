@@ -16,8 +16,8 @@ export default function ProfileHeader() {
     following,
   } = user;
 
-  const names = name.split(" ");
-  const initials = (names[0][0] + names[1][0]).toUpperCase();
+  const names = name?.split(" ");
+  const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
   const editButtonHandler = () => {
     navigate("/profile/edit");
