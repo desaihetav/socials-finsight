@@ -1,5 +1,5 @@
 export const GET_USER_BY_ID = `
-  query ($id: String!) {
+  query ($id: uuid!) {
     users(where: { id: { _eq: $id } }) {
       id
       name
@@ -19,7 +19,7 @@ export const GET_USER_BY_ID = `
 `;
 
 export const UPDATE_USER_BY_ID = `
-  mutation ($id: String!, $changes: users_set_input!) {
+  mutation ($id: uuid!, $changes: users_set_input!) {
     update_users(where: { id: { _eq: $id } }, _set: $changes) {
       returning {
         id

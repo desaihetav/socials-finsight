@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <div className="sm:h-screen py-4 mx-4 sm:mx-0">
       <div className="h-full flex flex-col items-center md:items-start rounded-2xl bg-gray-800 bg-opacity-75">
-        <div className="w-full p-4 flex sm:flex-col justify-around sm:justify-items-start">
+        <div className="w-full h-full p-4 flex sm:flex-col justify-around sm:justify-start">
           <NavLink className="hidden sm:block" to="/">
             <img
               className="mb-6 mx-auto"
@@ -13,6 +13,7 @@ export default function Sidebar() {
               alt="finsight logo"
             />
           </NavLink>
+
           <SidebarNavLink icon="/icons/home.svg" title="Home" link="/" />
           <SidebarNavLink
             icon="/icons/search.svg"
