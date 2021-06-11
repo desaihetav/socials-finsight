@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getPosts, likePost, unlikePost } from "../../services/posts";
+import {
+  createNewPost,
+  getPosts,
+  likePost,
+  savePost,
+  unlikePost,
+  unsavePost,
+} from "../../services/posts";
 
 export const loadAllPosts = createAsyncThunk(
   "posts/loadAllPosts",
@@ -37,19 +44,53 @@ export const unlikePostById = createAsyncThunk(
   }
 );
 
+export const savePostById = createAsyncThunk(
+  "posts/savePostById",
+  async ({ user_id, post_id }) => {
+    try {
+      const savedPost = await savePost({ user_id, post_id });
+      return savedPost;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const unsavePostById = createAsyncThunk(
+  "posts/unsavePostById",
+  async ({ user_id, post_id }) => {
+    try {
+      const unsavedPost = await unsavePost({ user_id, post_id });
+      return unsavedPost;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const createPost = createAsyncThunk(
+  "posts/createPost",
+  async ({ user_id, content }) => {
+    try {
+      const post = await createNewPost({ user_id, content });
+      return post;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
     status: "idle",
     error: null,
     posts: [],
+    newPostContent: "",
   },
   reducers: {
-    incrementLike: (state, action) => {
-      const postIndex = state.posts.findIndex(
-        (post) => post.postID === action.payload
-      );
-      state.posts[postIndex].likes += 1;
+    updateNewPostContent: (state, action) => {
+      state.newPostContent = action.payload.content;
     },
   },
   extraReducers: {
@@ -108,9 +149,65 @@ export const postsSlice = createSlice({
       console.log("error");
       state.status = "error";
     },
+    [savePostById.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [savePostById.fulfilled]: (state, action) => {
+      console.log("fulfilled");
+      console.log(action.payload);
+      const { user_id, post_id } = action.payload;
+      const requiredPost = state.posts.find((post) => post.id === post_id);
+      requiredPost.saves.push({
+        user: {
+          id: user_id,
+        },
+      });
+      requiredPost.saves_aggregate.aggregate.count++;
+      state.status = "fulfilled";
+    },
+    [savePostById.error]: (state) => {
+      console.log("error");
+      state.status = "error";
+    },
+    [unsavePostById.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [unsavePostById.fulfilled]: (state, action) => {
+      console.log("fulfilled");
+      console.log(action.payload);
+      const { user_id, post_id } = action.payload;
+      const requiredPost = state.posts.find((post) => post.id === post_id);
+      const updatedSaves = requiredPost.likes.filter(
+        (like) => like.user.id !== user_id
+      );
+      requiredPost.saves = updatedSaves;
+      requiredPost.saves_aggregate.aggregate.count--;
+      state.status = "fulfilled";
+    },
+    [unsavePostById.error]: (state) => {
+      console.log("error");
+      state.status = "error";
+    },
+    [createPost.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [createPost.fulfilled]: (state, action) => {
+      console.log("fulfilled");
+      console.log(action.payload);
+      state.newPostContent = "";
+      state.posts.push(action.payload);
+      state.status = "fulfilled";
+    },
+    [createPost.error]: (state) => {
+      console.log("error");
+      state.status = "error";
+    },
   },
 });
 
-export const { incrementLike } = postsSlice.actions;
+export const { incrementLike, updateNewPostContent } = postsSlice.actions;
 
 export default postsSlice.reducer;

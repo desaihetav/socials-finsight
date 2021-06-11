@@ -23,7 +23,7 @@ function App() {
     <div className="bg-gray-900 min-h-screen text-gray-50 flex flex-col px-4">
       <div className="w-full max-w-7xl mx-auto flex">
         <div
-          className={`w-full -ml-4 sm:w-24 md:w-5/12 md:flex-grow md:max-w-xs sm:ml-0 sm:mr-6 fixed sm:static bottom-0 sm:h-full`}
+          className={`w-full -ml-4 sm:w-24 md:w-5/12 md:flex-grow md:max-w-xs sm:ml-0 sm:mr-6 fixed z-10 sm:static bottom-0 sm:h-full`}
         >
           <Sidebar />
         </div>

@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { likePostById, unlikePostById } from "../features/posts/postsSlice";
+import {
+  likePostById,
+  savePostById,
+  unlikePostById,
+  unsavePostById,
+} from "../features/posts/postsSlice";
 
 export default function PostCard({ post }) {
   const {
@@ -12,22 +17,29 @@ export default function PostCard({ post }) {
     saves_aggregate: {
       aggregate: { count: saveCount },
     },
+    reposts_aggregate: {
+      aggregate: { count: repostCount },
+    },
     likes,
     saves,
+    reposts,
   } = post;
 
   const { userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const isPostLiked = likes.length;
   const isPostSaved = saves.length;
+  const isPostReposted = reposts.length;
 
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
   console.log({ likes });
 
+  console.log((content.match(/\n/g) || []).length);
+
   return (
-    <div className="bg-gray-800 p-4 pb-2 rounded-2xl">
+    <div className="bg-gray-800 p-4 pb-2 mb-4 rounded-2xl">
       <div className="flex">
         <div className="h-14 w-14 rounded-2xl bg-gray-700 flex items-center justify-center">
           {image_url ? (
@@ -41,7 +53,7 @@ export default function PostCard({ post }) {
           <h2 className="text-gray-300">@{username}</h2>
         </div>
       </div>
-      <p className="text-base mt-4 my-2 font-medium">{content}</p>
+      <p className="mt-4 my-2 font-medium whitespace-pre-wrap">{content}</p>
       <div className="flex items-center justify-around opacity-70">
         <button className="flex items-center py-2 px-4">
           <img
@@ -52,7 +64,16 @@ export default function PostCard({ post }) {
           <span className={`font-semibold`}>{likeCount}</span>
         </button>
         <button className="flex items-center py-2 px-4">
-          <img className="mr-2 h-4 w-4" src="/icons/share.svg" alt="share" />
+          <img
+            className="mr-2 h-4 w-4"
+            src={`/icons/${isPostReposted ? "repost-green" : "repost"}.svg`}
+            alt="share"
+          />
+          <span
+            className={`${isPostReposted && "text-green-400"} font-semibold`}
+          >
+            {repostCount}
+          </span>
         </button>
         <button
           onClick={() => {
@@ -72,7 +93,15 @@ export default function PostCard({ post }) {
             {likeCount}
           </span>
         </button>
-        <button className="flex items-center py-2 px-4">
+        <button
+          onClick={() => {
+            console.log("dispatcing with: ", userId, postId);
+            isPostSaved
+              ? dispatch(unsavePostById({ user_id: userId, post_id: postId }))
+              : dispatch(savePostById({ user_id: userId, post_id: postId }));
+          }}
+          className="flex items-center py-2 px-4"
+        >
           <img
             className="mr-2 h-4 w-4"
             src={`/icons/${isPostSaved ? "bookmark-yellow" : "bookmark"}.svg`}
@@ -83,7 +112,6 @@ export default function PostCard({ post }) {
           </span>
         </button>
       </div>
-      <p>{likes.length}</p>
     </div>
   );
 }

@@ -1,4 +1,11 @@
-import { GET_ALL_POSTS, LIKE_POST, UNLIKE_POST } from "../graphql/posts";
+import {
+  CREATE_NEW_POST,
+  GET_ALL_POSTS,
+  LIKE_POST,
+  SAVE_POST,
+  UNLIKE_POST,
+  UNSAVE_POST,
+} from "../graphql/posts";
 import axios from "axios";
 import { GRAPHQL_ENDPOINT } from "../lib/constants";
 
@@ -30,36 +37,28 @@ export const unlikePost = async (variables) => {
   return response.data.data.delete_likes.returning[0];
 };
 
-// const extractRequiredFields = (user) => {
-//   const finalUser = (({
-//     name,
-//     bio,
-//     image_url,
-//     header_image_url,
-//     location,
-//     website_url,
-//     birth_date,
-//   }) => ({
-//     name,
-//     bio,
-//     image_url,
-//     header_image_url,
-//     location,
-//     website_url,
-//     birth_date,
-//   }))(user);
-//   return finalUser;
-// };
+export const savePost = async (variables) => {
+  const response = await axios.post(GRAPHQL_ENDPOINT, {
+    query: SAVE_POST,
+    variables,
+  });
+  return response.data.data.insert_saves_one;
+};
 
-// export const updateUser = async (updatedUser) => {
-//   const finalUser = extractRequiredFields(updatedUser);
-//   const variables = {
-//     id: updatedUser.id,
-//     changes: finalUser,
-//   };
-//   const response = await axios.post(GRAPHQL_ENDPOINT, {
-//     query: UPDATE_USER_BY_ID,
-//     variables,
-//   });
-//   return response.data.data.update_users.returning[0];
-// };
+export const unsavePost = async (variables) => {
+  const response = await axios.post(GRAPHQL_ENDPOINT, {
+    query: UNSAVE_POST,
+    variables,
+  });
+  console.log(response);
+  return response.data.data.delete_saves.returning[0];
+};
+
+export const createNewPost = async (variables) => {
+  const response = await axios.post(GRAPHQL_ENDPOINT, {
+    query: CREATE_NEW_POST,
+    variables,
+  });
+  console.log(response);
+  return response.data.data.insert_posts_one;
+};

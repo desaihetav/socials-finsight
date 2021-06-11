@@ -7,7 +7,7 @@ export default function SidebarFooter() {
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
   return (
-    <div className="hover:bg-gray-700 hover:bg-opacity-40 w-full rounded-b-2xl p-4 border-t border-gray-700 transition-colors duration-300 cursor-pointer hidden sm:flex">
+    <div className="hover-hover:bg-gray-700 hover-hover:bg-opacity-40 w-full rounded-b-2xl p-4 border-t border-gray-700 transition-colors duration-300 cursor-pointer hidden sm:flex">
       <NavLink className="w-full" to="/profile">
         {user && (
           <div className="flex w-full">
