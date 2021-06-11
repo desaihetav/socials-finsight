@@ -45,7 +45,7 @@ export default function EditProfile() {
       {!user && <h1>Loading...</h1>}
       {user && (
         <div className="bg-gray-800 p-6 mt-4 rounded-2xl">
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             <div className="h-16 w-16 rounded-3xl bg-gray-700 flex items-center justify-center">
               {image_url ? (
                 <img
@@ -59,7 +59,7 @@ export default function EditProfile() {
                 </span>
               )}
             </div>
-            <div className="ml-4 flex flex-col justify-center overflow-hidden">
+            <div className="ml-4 flex flex-col flex-grow justify-center overflow-hidden">
               <input
                 type="text"
                 value={name}
@@ -84,7 +84,7 @@ export default function EditProfile() {
               type="url"
               value={website_url}
               placeholder="Link (with https://)"
-              className="bg-gray-700 py-2 px-3 rounded-xl"
+              className="bg-gray-700 py-2 px-3 rounded-xl w-full"
               onChange={(e) =>
                 updateFieldHandler("website_url", e.target.value)
               }
@@ -100,7 +100,7 @@ export default function EditProfile() {
               type="text"
               value={location}
               placeholder="Location"
-              className="bg-gray-700 py-2 px-3 rounded-xl"
+              className="bg-gray-700 py-2 px-3 rounded-xl w-full"
               onChange={(e) => updateFieldHandler("location", e.target.value)}
             />
           </div>
