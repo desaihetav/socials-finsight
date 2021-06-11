@@ -79,7 +79,16 @@ export default function PostCard({ post }) {
             console.log("dispatcing with: ", userId, postId);
             isPostReposted
               ? dispatch(unrepostPostById({ user_id: userId, post_id: postId }))
-              : dispatch(repostPostById({ user_id: userId, post_id: postId }));
+              : dispatch(
+                  repostPostById({
+                    user_id: userId,
+                    post_id: postId,
+                    sender_id: userId,
+                    receiver_id: post.user_id,
+                    type: "repost",
+                    link: `/post/${postId}`,
+                  })
+                );
           }}
           className="flex items-center py-2 px-4"
         >
@@ -99,7 +108,16 @@ export default function PostCard({ post }) {
             console.log("dispatcing with: ", userId, postId);
             isPostLiked
               ? dispatch(unlikePostById({ user_id: userId, post_id: postId }))
-              : dispatch(likePostById({ user_id: userId, post_id: postId }));
+              : dispatch(
+                  likePostById({
+                    user_id: userId,
+                    post_id: postId,
+                    sender_id: userId,
+                    receiver_id: post.user_id,
+                    type: "like",
+                    link: `/post/${postId}`,
+                  })
+                );
           }}
           className="flex items-center py-2 px-4"
         >
@@ -117,7 +135,16 @@ export default function PostCard({ post }) {
             console.log("dispatcing with: ", userId, postId);
             isPostSaved
               ? dispatch(unsavePostById({ user_id: userId, post_id: postId }))
-              : dispatch(savePostById({ user_id: userId, post_id: postId }));
+              : dispatch(
+                  savePostById({
+                    user_id: userId,
+                    post_id: postId,
+                    sender_id: userId,
+                    receiver_id: post.user_id,
+                    type: "save",
+                    link: `/post/${postId}`,
+                  })
+                );
           }}
           className="flex items-center py-2 px-4"
         >

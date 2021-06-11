@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import { Counter, Login, Profile, EditProfile, Home } from "./features";
+import {
+  Counter,
+  Login,
+  Profile,
+  EditProfile,
+  Home,
+  Notifications,
+} from "./features";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeUser } from "./features/auth/authSlice";
@@ -47,6 +54,7 @@ function App() {
               element={<Profile />}
             />
             <Route path="/profile/edit" element={<EditProfile />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="/counter" element={<Counter />} />
           </Routes>
         </div>

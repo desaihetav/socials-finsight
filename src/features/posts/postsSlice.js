@@ -24,9 +24,9 @@ export const loadAllPosts = createAsyncThunk(
 
 export const likePostById = createAsyncThunk(
   "posts/likePostById",
-  async ({ user_id, post_id }) => {
+  async (variables) => {
     try {
-      const likedPost = await likePost({ user_id, post_id });
+      const likedPost = await likePost(variables);
       return likedPost;
     } catch (error) {
       console.log(error);
@@ -48,9 +48,9 @@ export const unlikePostById = createAsyncThunk(
 
 export const savePostById = createAsyncThunk(
   "posts/savePostById",
-  async ({ user_id, post_id }) => {
+  async (variables) => {
     try {
-      const savedPost = await savePost({ user_id, post_id });
+      const savedPost = await savePost(variables);
       return savedPost;
     } catch (error) {
       console.log(error);
@@ -72,9 +72,9 @@ export const unsavePostById = createAsyncThunk(
 
 export const repostPostById = createAsyncThunk(
   "posts/repostPostById",
-  async ({ user_id, post_id }) => {
+  async (variables) => {
     try {
-      const repostedPost = await repostPost({ user_id, post_id });
+      const repostedPost = await repostPost(variables);
       return repostedPost;
     } catch (error) {
       console.log(error);
@@ -127,7 +127,6 @@ export const postsSlice = createSlice({
     [loadAllPosts.fulfilled]: (state, action) => {
       console.log("fulfilled");
       const { posts, reposts } = action.payload;
-      console.log(posts, reposts);
       const repostsFormatted = reposts.map((repost) => ({
         ...repost.post,
         repost_user_name: repost.user.name,
@@ -149,7 +148,6 @@ export const postsSlice = createSlice({
     },
     [likePostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.likes.push({
@@ -170,7 +168,6 @@ export const postsSlice = createSlice({
     },
     [unlikePostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.likes.splice(
@@ -189,7 +186,6 @@ export const postsSlice = createSlice({
     },
     [savePostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.saves.push({
@@ -210,7 +206,6 @@ export const postsSlice = createSlice({
     },
     [unsavePostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.saves.splice(
@@ -229,7 +224,6 @@ export const postsSlice = createSlice({
     },
     [repostPostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user, post } = action.payload;
       const requiredPost = state.posts.find(
         (postItem) => postItem.id === post.id
@@ -258,7 +252,6 @@ export const postsSlice = createSlice({
     },
     [unrepostPostById.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find(
         (post) => post.id === post_id && !post.repost_user_id
@@ -283,7 +276,6 @@ export const postsSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload);
       state.newPostContent = "";
       state.posts.push(action.payload);
       state.status = "fulfilled";

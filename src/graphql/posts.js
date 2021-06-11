@@ -40,6 +40,12 @@ const POST_FIELDS = `
   }
 `;
 
+const INSERT_NOTIFICATION = `
+insert_notifications_one(object: {link: $link, receiver_id: $receiver_id, sender_id: $sender_id, type: $type}) {
+  id
+}
+`;
+
 export const GET_ALL_POSTS = `
 query ($user_id: uuid!) {
     posts {
@@ -58,11 +64,12 @@ query ($user_id: uuid!) {
 `;
 
 export const LIKE_POST = `
-mutation ($post_id: uuid!, $user_id: uuid!) {
+mutation ($post_id: uuid!, $user_id: uuid!, $sender_id: uuid!, $receiver_id: uuid!, $type: String!, $link: String!) {
     insert_likes_one(object: {post_id: $post_id, user_id: $user_id}) {
         post_id,
         user_id
     }
+    ${INSERT_NOTIFICATION}
 }
 `;
 
@@ -78,11 +85,12 @@ mutation ($post_id: uuid!, $user_id: uuid!) {
 `;
 
 export const SAVE_POST = `
-mutation ($post_id: uuid!, $user_id: uuid!) {
+mutation ($post_id: uuid!, $user_id: uuid!, $sender_id: uuid!, $receiver_id: uuid!, $type: String!, $link: String!) {
     insert_saves_one(object: {post_id: $post_id, user_id: $user_id}) {
         post_id,
         user_id
     }
+    ${INSERT_NOTIFICATION}
 }
 `;
 
@@ -98,7 +106,7 @@ mutation ($post_id: uuid!, $user_id: uuid!) {
 `;
 
 export const REPOST_POST = `
-mutation ($post_id: uuid!, $user_id: uuid!) {
+mutation ($post_id: uuid!, $user_id: uuid!, $sender_id: uuid!, $receiver_id: uuid!, $type: String!, $link: String!) {
     insert_reposts_one(object: {post_id: $post_id, user_id: $user_id}) {
       user {
         id
@@ -108,6 +116,7 @@ mutation ($post_id: uuid!, $user_id: uuid!) {
         ${POST_FIELDS}
       }
     }
+    ${INSERT_NOTIFICATION}
 }
 `;
 
