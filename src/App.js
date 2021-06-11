@@ -42,7 +42,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <PrivateRoute path="/profile" element={<Profile />} />
+            <PrivateRoute
+              path="/profile/:profileUserId"
+              element={<Profile />}
+            />
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/counter" element={<Counter />} />
           </Routes>

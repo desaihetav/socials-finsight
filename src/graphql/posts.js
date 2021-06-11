@@ -1,43 +1,43 @@
 const POST_FIELDS = `
-content
+  content
+  id
+  user_id
+  created
+  likes(where: {user_id: {_eq: $user_id}}) {
+    user {
       id
-      user_id
-      created
-      likes(where: {user_id: {_eq: $user_id}}) {
-        user {
-          id
-        }
-      }
-      saves(where: {user_id: {_eq: $user_id}}) {
-        user {
-          id
-        }
-      }
-      reposts(where: {user_id: {_eq: $user_id}}) {
-        user {
-          id
-        }
-      }
-      likes_aggregate {
-        aggregate {
-          count
-        }
-      }
-      saves_aggregate {
-        aggregate {
-          count
-        }
-      }
-      reposts_aggregate {
-        aggregate {
-          count
-        }
-      }
-      user {
-        image_url
-        name
-        username
-      }
+    }
+  }
+  saves(where: {user_id: {_eq: $user_id}}) {
+    user {
+      id
+    }
+  }
+  reposts(where: {user_id: {_eq: $user_id}}) {
+    user {
+      id
+    }
+  }
+  likes_aggregate {
+    aggregate {
+      count
+    }
+  }
+  saves_aggregate {
+    aggregate {
+      count
+    }
+  }
+  reposts_aggregate {
+    aggregate {
+      count
+    }
+  }
+  user {
+    image_url
+    name
+    username
+  }
 `;
 
 export const GET_ALL_POSTS = `

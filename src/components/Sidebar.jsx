@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { SidebarFooter, SidebarNavLink } from ".";
 
 export default function Sidebar() {
+  const { status, userId, userToken } = useSelector((state) => state.auth);
+
   return (
     <div className="sm:h-screen py-4 mx-4 sm:mx-0 bg-gradient-to-t from-gray-900 to-transparent">
       <div className="h-full flex flex-col items-center md:items-start rounded-2xl bg-gray-700 bg-opacity-50 backdrop-filter backdrop-blur-sm">
@@ -28,7 +31,7 @@ export default function Sidebar() {
           <SidebarNavLink
             icon="/icons/user.svg"
             title="Profile"
-            link="/profile"
+            link={`/profile/${userId}`}
           />
         </div>
         <SidebarFooter />
