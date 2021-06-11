@@ -24,9 +24,9 @@ export default function ProfileHeader() {
   };
 
   return (
-    <div className="bg-gray-800 bg-opacity-75 p-6 mt-4 rounded-2xl">
+    <div className="bg-blue-700 p-6 mt-4 rounded-2xl">
       <div className="flex">
-        <div className="h-14 w-14 rounded-2xl bg-gray-700 flex items-center justify-center">
+        <div className="h-14 w-14 rounded-2xl bg-blue-600 flex items-center justify-center">
           {image_url ? (
             <img className="h-14 w-14 rounded-2xl" src={image_url} alt={name} />
           ) : (
@@ -42,7 +42,7 @@ export default function ProfileHeader() {
         </div>
         <button
           onClick={editButtonHandler}
-          className="ml-auto my-auto px-4 py-2 rounded-xl bg-gray-700"
+          className="ml-auto my-auto px-4 py-2 rounded-xl bg-blue-600"
         >
           Edit
         </button>
