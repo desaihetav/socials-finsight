@@ -4,6 +4,8 @@ import {
   savePostById,
   unlikePostById,
   unsavePostById,
+  repostPostById,
+  unrepostPostById,
 } from "../features/posts/postsSlice";
 
 export default function PostCard({ post }) {
@@ -34,12 +36,21 @@ export default function PostCard({ post }) {
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
-  console.log({ likes });
-
-  console.log((content.match(/\n/g) || []).length);
+  console.log(reposts);
 
   return (
     <div className="bg-gray-800 p-4 pb-2 mb-4 rounded-2xl">
+      {post.repost_user_name && (
+        <div className="flex items-center mb-2 opacity-70">
+          <img className="h-4 w-4 mr-2" src="/icons/repost.svg" alt="repost" />
+          <p className="font-bold">
+            <span>
+              {post.repost_user_id === userId ? "You" : post.repost_user_name}
+            </span>{" "}
+            Reposted
+          </p>
+        </div>
+      )}
       <div className="flex">
         <div className="h-14 w-14 rounded-2xl bg-gray-700 flex items-center justify-center">
           {image_url ? (
@@ -63,7 +74,15 @@ export default function PostCard({ post }) {
           />
           <span className={`font-semibold`}>{likeCount}</span>
         </button>
-        <button className="flex items-center py-2 px-4">
+        <button
+          onClick={() => {
+            console.log("dispatcing with: ", userId, postId);
+            isPostReposted
+              ? dispatch(unrepostPostById({ user_id: userId, post_id: postId }))
+              : dispatch(repostPostById({ user_id: userId, post_id: postId }));
+          }}
+          className="flex items-center py-2 px-4"
+        >
           <img
             className="mr-2 h-4 w-4"
             src={`/icons/${isPostReposted ? "repost-green" : "repost"}.svg`}

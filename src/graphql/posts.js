@@ -1,6 +1,7 @@
 const POST_FIELDS = `
 content
       id
+      user_id
       created
       likes(where: {user_id: {_eq: $user_id}}) {
         user {
@@ -44,6 +45,15 @@ query ($user_id: uuid!) {
     posts {
       ${POST_FIELDS}
     }
+    reposts {
+      user {
+        id
+        name
+      }
+      post {
+        ${POST_FIELDS}
+      }
+    }
   }
 `;
 
@@ -79,6 +89,31 @@ mutation ($post_id: uuid!, $user_id: uuid!) {
 export const UNSAVE_POST = `
 mutation ($post_id: uuid!, $user_id: uuid!) {
     delete_saves(where: {post_id: {_eq: $post_id}, user_id: {_eq: $user_id}}) {
+      returning {
+        post_id
+        user_id
+      }
+    }
+  }  
+`;
+
+export const REPOST_POST = `
+mutation ($post_id: uuid!, $user_id: uuid!) {
+    insert_reposts_one(object: {post_id: $post_id, user_id: $user_id}) {
+      user {
+        id
+        name
+      }
+      post {
+        ${POST_FIELDS}
+      }
+    }
+}
+`;
+
+export const UNREPOST_POST = `
+mutation ($post_id: uuid!, $user_id: uuid!) {
+    delete_reposts(where: {post_id: {_eq: $post_id}, user_id: {_eq: $user_id}}) {
       returning {
         post_id
         user_id

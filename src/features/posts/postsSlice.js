@@ -3,8 +3,10 @@ import {
   createNewPost,
   getPosts,
   likePost,
+  repostPost,
   savePost,
   unlikePost,
+  unrepostPost,
   unsavePost,
 } from "../../services/posts";
 
@@ -68,6 +70,30 @@ export const unsavePostById = createAsyncThunk(
   }
 );
 
+export const repostPostById = createAsyncThunk(
+  "posts/repostPostById",
+  async ({ user_id, post_id }) => {
+    try {
+      const repostedPost = await repostPost({ user_id, post_id });
+      return repostedPost;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const unrepostPostById = createAsyncThunk(
+  "posts/unrepostPostById",
+  async ({ user_id, post_id }) => {
+    try {
+      const unrepostedPost = await unrepostPost({ user_id, post_id });
+      return unrepostedPost;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async ({ user_id, content }) => {
@@ -100,9 +126,18 @@ export const postsSlice = createSlice({
     },
     [loadAllPosts.fulfilled]: (state, action) => {
       console.log("fulfilled");
-      console.log(action.payload.posts);
+      const { posts, reposts } = action.payload;
+      console.log(posts, reposts);
+      const repostsFormatted = reposts.map((repost) => ({
+        ...repost.post,
+        repost_user_name: repost.user.name,
+        repost_user_id: repost.user.id,
+      }));
       state.status = "fulfilled";
-      state.posts = action.payload.posts;
+      const finalPosts = posts
+        .concat(repostsFormatted)
+        .sort((a, b) => (new Date(b.created) > new Date(a.created) ? 1 : -1));
+      state.posts = finalPosts;
     },
     [loadAllPosts.error]: (state) => {
       console.log("error");
@@ -138,10 +173,9 @@ export const postsSlice = createSlice({
       console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
-      const updatedLikes = requiredPost.likes.filter(
-        (like) => like.user.id !== user_id
+      requiredPost.likes.splice(
+        requiredPost.likes.findIndex((post) => post.id === post_id, 1)
       );
-      requiredPost.likes = updatedLikes;
       requiredPost.likes_aggregate.aggregate.count--;
       state.status = "fulfilled";
     },
@@ -179,14 +213,67 @@ export const postsSlice = createSlice({
       console.log(action.payload);
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
-      const updatedSaves = requiredPost.likes.filter(
-        (like) => like.user.id !== user_id
+      requiredPost.saves.splice(
+        requiredPost.saves.findIndex((post) => post.id === post_id, 1)
       );
-      requiredPost.saves = updatedSaves;
       requiredPost.saves_aggregate.aggregate.count--;
       state.status = "fulfilled";
     },
     [unsavePostById.error]: (state) => {
+      console.log("error");
+      state.status = "error";
+    },
+    [repostPostById.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [repostPostById.fulfilled]: (state, action) => {
+      console.log("fulfilled");
+      console.log(action.payload);
+      const { user, post } = action.payload;
+      const requiredPost = state.posts.find(
+        (postItem) => postItem.id === post.id
+      );
+      requiredPost.reposts.push({
+        user: {
+          id: user.id,
+        },
+      });
+      requiredPost.reposts_aggregate.aggregate.count++;
+      post.repost_user_id = user.id;
+      post.repost_user_name = user.name;
+      state.posts.push(post);
+      state.posts.sort((a, b) =>
+        new Date(b.created) > new Date(a.created) ? 1 : -1
+      );
+      state.status = "fulfilled";
+    },
+    [repostPostById.error]: (state) => {
+      console.log("error");
+      state.status = "error";
+    },
+    [unrepostPostById.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [unrepostPostById.fulfilled]: (state, action) => {
+      console.log("fulfilled");
+      console.log(action.payload);
+      const { user_id, post_id } = action.payload;
+      const requiredPost = state.posts.find(
+        (post) => post.id === post_id && !post.repost_user_id
+      );
+      requiredPost.reposts.length = 0;
+      requiredPost.reposts_aggregate.aggregate.count--;
+      state.posts.splice(
+        state.posts.findIndex(
+          (post) => post.id === post_id && post.repost_user_id === user_id
+        ),
+        1
+      );
+      state.status = "fulfilled";
+    },
+    [unrepostPostById.error]: (state) => {
       console.log("error");
       state.status = "error";
     },

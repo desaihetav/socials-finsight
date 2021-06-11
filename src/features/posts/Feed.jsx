@@ -13,6 +13,13 @@ export default function Feed() {
       authStatus === "initComplete" &&
       dispatch(loadAllPosts(userId));
   }, [authStatus]);
+
+  // let sortedPosts = [...posts];
+
+  // sortedPosts.sort((a, b) =>
+  //   new Date(b.created) > new Date(a.created) ? 1 : -1
+  // );
+
   return (
     <div className="pt-4 pb-20">
       {posts.map((post) => (
