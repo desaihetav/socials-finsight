@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ProfileHeader() {
   const { user } = useSelector((state) => state.profile);
+  const { userId, status: authStatus } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { profileUserId } = useParams();
 
   const {
     name,
@@ -24,9 +26,9 @@ export default function ProfileHeader() {
   };
 
   return (
-    <div className="bg-blue-700 p-6 mt-4 rounded-2xl">
+    <div className="bg-indigo-700 bg-opacity-70 p-6 mt-4 rounded-2xl">
       <div className="flex">
-        <div className="h-14 w-14 rounded-2xl bg-blue-600 flex items-center justify-center">
+        <div className="h-14 w-14 rounded-2xl bg-indigo-600 bg-opacity-70 flex items-center justify-center">
           {image_url ? (
             <img className="h-14 w-14 rounded-2xl" src={image_url} alt={name} />
           ) : (
@@ -40,12 +42,14 @@ export default function ProfileHeader() {
           <h1 className="font-bold text-xl">{name}</h1>
           <h2 className="text-gray-300">@{username}</h2>
         </div>
-        <button
-          onClick={editButtonHandler}
-          className="ml-auto my-auto px-4 py-2 rounded-xl bg-blue-600"
-        >
-          Edit
-        </button>
+        {userId === profileUserId && (
+          <button
+            onClick={editButtonHandler}
+            className="ml-auto my-auto px-4 py-2 rounded-xl bg-indigo-600 bg-opacity-70"
+          >
+            Edit
+          </button>
+        )}
       </div>
       {bio && <p className="mt-4 font-semibold">{bio}</p>}
       <div className="text-gray-300">
