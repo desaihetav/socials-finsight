@@ -44,5 +44,6 @@ export const updateUser = async (updatedUser) => {
     query: UPDATE_USER_BY_ID,
     variables,
   });
+  console.log(response);
   return response.data.data.update_users.returning[0];
 };

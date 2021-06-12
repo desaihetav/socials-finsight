@@ -9,6 +9,7 @@ import {
   Home,
   Notifications,
   Search,
+  Post,
 } from "./features";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,6 +58,7 @@ function App() {
             <Route path="/profile/edit" element={<EditProfile />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/search" element={<Search />} />
+            <PrivateRoute path="/post/:postId" element={<Post />} />
             <Route path="/counter" element={<Counter />} />
           </Routes>
         </div>

@@ -9,7 +9,7 @@ import {
   unrepostPostById,
 } from "../features/posts/postsSlice";
 
-export default function PostCard({ post }) {
+export default function PostItemCard({ post }) {
   const {
     id: postId,
     user: { image_url, name, username },
@@ -29,7 +29,6 @@ export default function PostCard({ post }) {
   } = post;
 
   const { userId } = useSelector((state) => state.auth);
-  const { posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const isPostLiked = likes.length;
   const isPostSaved = saves.length;
@@ -38,13 +37,11 @@ export default function PostCard({ post }) {
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
-  const replyCount = posts.filter((post) => post.parent_post === postId).length;
-
   console.log(reposts);
 
   return (
     <Link to={`/post/${postId}`}>
-      <div className="bg-gray-800 p-4 pb-2 mb-4 rounded-2xl">
+      <div className="bg-gray-800 border-2 border-gray-600 p-4 pb-2 my-4 rounded-2xl">
         {post.repost_user_name && (
           <div className="flex items-center mb-2 opacity-70">
             <img
@@ -85,7 +82,7 @@ export default function PostCard({ post }) {
               src={`/icons/comment.svg`}
               alt="comments"
             />
-            <span className={`font-semibold`}>{replyCount}</span>
+            <span className={`font-semibold`}>{likeCount}</span>
           </div>
           <button
             onClick={(e) => {

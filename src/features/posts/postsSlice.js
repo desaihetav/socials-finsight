@@ -96,9 +96,9 @@ export const unrepostPostById = createAsyncThunk(
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ user_id, content }) => {
+  async ({ user_id, content, parent_post }) => {
     try {
-      const post = await createNewPost({ user_id, content });
+      const post = await createNewPost({ user_id, content, parent_post });
       return post;
     } catch (error) {
       console.log(error);

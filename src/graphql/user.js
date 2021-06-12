@@ -30,9 +30,6 @@ export const UPDATE_USER_BY_ID = `
         location
         website_url
         birth_date
-        created_at
-        followers
-        following
       }
     }
   }

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNewPostContent, createPost } from "../features/posts/postsSlice";
 
-export default function NewPost() {
+export default function NewPost({ parent_post, placeholder }) {
   const { newPostContent, status, error } = useSelector((state) => state.posts);
   const { user, status: authStatus } = useSelector((state) => state.auth);
   const contentEl = useRef(null);
@@ -12,7 +12,7 @@ export default function NewPost() {
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
   return (
-    <div className="p-4 bg-gray-700 bg-opacity-70 rounded-2xl flex flex-col">
+    <div className="p-4 my-4 bg-gray-800 border-2 border-gray-600 rounded-2xl flex flex-col">
       <div className="flex">
         <div className="h-14 w-14 rounded-2xl bg-gray-700 flex items-center justify-center">
           {user?.image_url ? (
@@ -33,7 +33,7 @@ export default function NewPost() {
       <textarea
         type="text"
         value={newPostContent}
-        placeholder="What's happening?"
+        placeholder={placeholder}
         ref={contentEl}
         className="mt-4 font-medium bg-transparent py-2 px-1 rounded-xl w-full resize-none"
         style={{
@@ -45,7 +45,13 @@ export default function NewPost() {
       />
       <button
         onClick={() =>
-          dispatch(createPost({ user_id: user.id, content: newPostContent }))
+          dispatch(
+            createPost({
+              user_id: user.id,
+              content: newPostContent,
+              parent_post,
+            })
+          )
         }
         className="py-2 px-4 bg-blue-600 font-semibold rounded-xl ml-auto mt-4"
       >

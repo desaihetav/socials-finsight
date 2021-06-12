@@ -3,6 +3,7 @@ const POST_FIELDS = `
   id
   user_id
   created
+  parent_post
   likes(where: {user_id: {_eq: $user_id}}) {
     user {
       id
@@ -132,8 +133,8 @@ mutation ($post_id: uuid!, $user_id: uuid!) {
 `;
 
 export const CREATE_NEW_POST = `
-mutation ($user_id: uuid!, $content: String!) {
-  insert_posts_one(object: {content: $content, user_id: $user_id}) {
+mutation ($user_id: uuid!, $content: String!, $parent_post: uuid!) {
+  insert_posts_one(object: {content: $content, user_id: $user_id, parent_post: $parent_post}) {
     ${POST_FIELDS}
   }
 }

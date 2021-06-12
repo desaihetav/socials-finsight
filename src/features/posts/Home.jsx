@@ -6,7 +6,7 @@ import Feed from "./Feed";
 export default function Home() {
   return (
     <div className="py-4">
-      <NewPost />
+      <NewPost parent_post={null} placeholder="What's happening?" />
       <Feed />
     </div>
   );

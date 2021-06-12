@@ -7,9 +7,11 @@ export default function Feed() {
 
   return (
     <div className="pt-4 pb-20">
-      {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+      {posts
+        .filter((post) => !post.parent_post)
+        .map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
     </div>
   );
 }

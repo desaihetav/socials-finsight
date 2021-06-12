@@ -50,6 +50,7 @@ export const unsavePost = async (variables) => {
     query: UNSAVE_POST,
     variables,
   });
+  console.log(response);
   return response.data.data.delete_saves.returning[0];
 };
 
