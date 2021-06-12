@@ -26,9 +26,9 @@ export default function ProfileHeader() {
   };
 
   return (
-    <div className="bg-indigo-700 bg-opacity-70 p-6 mt-4 rounded-2xl">
+    <div className="bg-gray-800 border-2 border-gray-600 p-6 mt-4 rounded-2xl">
       <div className="flex">
-        <div className="h-14 w-14 rounded-2xl bg-indigo-600 bg-opacity-70 flex-shrink-0 flex items-center justify-center">
+        <div className="h-14 w-14 rounded-2xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
           {image_url ? (
             <img className="h-14 w-14 rounded-2xl" src={image_url} alt={name} />
           ) : (
@@ -45,7 +45,7 @@ export default function ProfileHeader() {
         {userId === profileUserId && (
           <button
             onClick={editButtonHandler}
-            className="ml-auto my-auto px-4 py-2 rounded-xl bg-indigo-600 bg-opacity-70"
+            className="ml-auto my-auto px-4 py-2 rounded-xl bg-gray-700"
           >
             Edit
           </button>

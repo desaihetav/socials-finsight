@@ -6,12 +6,8 @@ import { getUser } from "../../services/profile";
 export const loginUserWithCredentials = createAsyncThunk(
   "auth/loginUserWithCredentials",
   async ({ email, password }) => {
-    try {
-      const user = await loginUser({ email, password });
-      return { token: user.token, id: user.id };
-    } catch (error) {
-      console.log(error);
-    }
+    const user = await loginUser({ email, password });
+    return { token: user.token, id: user.id };
   }
 );
 
@@ -38,6 +34,7 @@ export const authSlice = createSlice({
     isAuthenticated:
       JSON.parse(localStorage?.getItem("isAuthenticated")) || null,
     user: null,
+    error: null,
   },
   reducers: {
     logoutUser: (state) => {
@@ -63,6 +60,7 @@ export const authSlice = createSlice({
       const { token, id } = action.payload;
       state.userToken = token;
       state.userId = id;
+      state.isAuthenticated = true;
       localStorage.setItem("authUserToken", JSON.stringify(token));
       localStorage.setItem("authUserId", JSON.stringify(id));
       localStorage.setItem("isAuthenticated", JSON.stringify(true));

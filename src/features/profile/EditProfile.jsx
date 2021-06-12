@@ -55,7 +55,7 @@ export default function EditProfile() {
                 />
               ) : (
                 <span className="font-bold text-2xl">
-                  {name.slice(0, 2).toUpperCase()}
+                  {name?.slice(0, 2).toUpperCase()}
                 </span>
               )}
             </div>
