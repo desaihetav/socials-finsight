@@ -12,8 +12,6 @@ export const GET_USER_BY_ID = `
       website_url
       birth_date
       created_at
-      followers
-      following
     }
   }
 `;

@@ -28,7 +28,7 @@ export default function ProfileHeader() {
   return (
     <div className="bg-indigo-700 bg-opacity-70 p-6 mt-4 rounded-2xl">
       <div className="flex">
-        <div className="h-14 w-14 rounded-2xl bg-indigo-600 bg-opacity-70 flex items-center justify-center">
+        <div className="h-14 w-14 rounded-2xl bg-indigo-600 bg-opacity-70 flex-shrink-0 flex items-center justify-center">
           {image_url ? (
             <img className="h-14 w-14 rounded-2xl" src={image_url} alt={name} />
           ) : (
