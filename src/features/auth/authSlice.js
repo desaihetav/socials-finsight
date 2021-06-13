@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginUser } from "../../services/auth";
+import { loginUser, unfollowUserById } from "../../services/auth";
 import axios from "axios";
 import { getUser } from "../../services/profile";
+import { followUserById } from "../../services/auth";
 
 export const loginUserWithCredentials = createAsyncThunk(
   "auth/loginUserWithCredentials",
@@ -17,6 +18,30 @@ export const initializeUser = createAsyncThunk(
     try {
       const user = await getUser(userId);
       return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const followUser = createAsyncThunk(
+  "auth/followUser",
+  async (variables) => {
+    try {
+      const followedUser = await followUserById(variables);
+      return followedUser;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  "auth/unfollowUser",
+  async (variables) => {
+    try {
+      const followedUser = await unfollowUserById(variables);
+      return followedUser;
     } catch (error) {
       console.log(error);
     }
@@ -74,10 +99,42 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [initializeUser.fulfilled]: (state, action) => {
+      const user = action.payload;
+      user.followers = user.followers.map((follower) => follower.follower_id);
+      user.following = user.following.map(
+        (followingItem) => followingItem.following_id
+      );
       state.user = action.payload;
       state.status = "initComplete";
     },
     [initializeUser.error]: (state) => {
+      state.status = "error";
+    },
+    [followUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [followUser.fulfilled]: (state, action) => {
+      state.user.following.push(action.payload.following_id);
+      state.status = "fulfilled";
+    },
+    [followUser.error]: (state) => {
+      state.status = "error";
+    },
+    [unfollowUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [unfollowUser.fulfilled]: (state, action) => {
+      console.log("unfollowing user....");
+      const { following_id } = action.payload;
+      const updatedFollowing = state.user.following.filter(
+        (followingItem) => followingItem !== following_id
+      );
+      console.log("following_id ", following_id);
+      console.log("updatedFollowing ", updatedFollowing);
+      state.user.following = updatedFollowing;
+      state.status = "fulfilled";
+    },
+    [unfollowUser.error]: (state) => {
       state.status = "error";
     },
   },

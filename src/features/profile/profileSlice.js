@@ -30,7 +30,7 @@ export const profileSlice = createSlice({
   initialState: {
     status: "idle",
     error: "",
-    user: {},
+    user: null,
   },
   reducers: {
     updateUserField: (state, action) => {
@@ -43,6 +43,14 @@ export const profileSlice = createSlice({
       state.status = "loading";
     },
     [getUserData.fulfilled]: (state, action) => {
+      // state.user = action.payload;
+      const user = action.payload;
+      user.followers_user_ids = user.followers.map(
+        (follower) => follower.follower_id
+      );
+      user.following_user_ids = user.following.map(
+        (followingItem) => followingItem.following_id
+      );
       state.user = action.payload;
       state.status = "fulfilled";
     },

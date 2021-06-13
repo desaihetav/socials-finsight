@@ -24,6 +24,8 @@ export default function Profile() {
     //eslint-disable-next-line
   }, [authStatus]);
 
+  console.log(user);
+
   return (
     <div>
       {(status === "loading" || authStatus !== "initComplete") && (
@@ -49,8 +51,8 @@ export default function Profile() {
                     post.user_id === profileUserId ||
                     post.repost_user_id === profileUserId
                 )
-                .map((post) => (
-                  <PostCard key={post.id} post={post} />
+                .map((post, index) => (
+                  <PostCard key={`${post.id}-${index}`} post={post} />
                 ))}
             </div>
           )}

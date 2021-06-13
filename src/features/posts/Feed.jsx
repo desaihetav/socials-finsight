@@ -9,8 +9,8 @@ export default function Feed() {
     <div className="pt-4 pb-20">
       {posts
         .filter((post) => !post.parent_post)
-        .map((post) => (
-          <PostCard key={post.id} post={post} />
+        .map((post, index) => (
+          <PostCard key={`${post.id}-${index}`} post={post} />
         ))}
     </div>
   );

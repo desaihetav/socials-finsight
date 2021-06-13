@@ -9,7 +9,6 @@ export const getUser = async (userId) => {
       id: userId,
     },
   });
-  console.log(response);
   return response.data.data.users[0];
 };
 
@@ -44,6 +43,5 @@ export const updateUser = async (updatedUser) => {
     query: UPDATE_USER_BY_ID,
     variables,
   });
-  console.log(response);
   return response.data.data.update_users.returning[0];
 };

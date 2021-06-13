@@ -12,6 +12,26 @@ export const GET_USER_BY_ID = `
       website_url
       birth_date
       created_at
+      followers {
+        follower_id
+        followers {
+          id
+          image_url
+          name
+          username
+          bio
+        }
+      }
+      following {
+        following_id
+        following {
+          id
+          image_url
+          name
+          username
+          bio
+        }
+      }
     }
   }
 `;
@@ -33,4 +53,25 @@ export const UPDATE_USER_BY_ID = `
       }
     }
   }
+`;
+
+export const FOLLOW_USER = `
+mutation ($follower_id: uuid!, $following_id: uuid) {
+  insert_follows_one(object: {follower_id: $follower_id, following_id: $following_id}) {
+    follower_id
+    following_id
+  }
+}
+`;
+
+export const UNFOLLOW_USER = `
+mutation ($follower_id: uuid!, $following_id: uuid) {
+  delete_follows(where: {follower_id: {_eq: $follower_id}, following_id: {_eq: $following_id}}) {
+    affected_rows
+    returning {
+      follower_id
+      following_id
+    }
+  }
+}
 `;

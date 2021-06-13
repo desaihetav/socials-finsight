@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LOGIN_USER } from "../graphql/auth";
+import { FOLLOW_USER, UNFOLLOW_USER } from "../graphql/user";
 import { GRAPHQL_ENDPOINT } from "../lib/constants";
 
 export const loginUser = async (variables) => {
@@ -8,4 +9,22 @@ export const loginUser = async (variables) => {
     variables,
   });
   return response.data.data.login;
+};
+
+export const followUserById = async (variables) => {
+  const response = await axios.post(GRAPHQL_ENDPOINT, {
+    query: FOLLOW_USER,
+    variables,
+  });
+  console.log(response);
+  return response.data.data.insert_follows_one;
+};
+
+export const unfollowUserById = async (variables) => {
+  const response = await axios.post(GRAPHQL_ENDPOINT, {
+    query: UNFOLLOW_USER,
+    variables,
+  });
+  console.log(response);
+  return response.data.data.delete_follows.returning[0];
 };

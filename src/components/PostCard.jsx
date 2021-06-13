@@ -40,8 +40,6 @@ export default function PostCard({ post }) {
 
   const replyCount = posts.filter((post) => post.parent_post === postId).length;
 
-  console.log(reposts);
-
   return (
     <Link to={`/post/${postId}`}>
       <div className="bg-gray-800 p-4 pb-2 mb-4 rounded-2xl">

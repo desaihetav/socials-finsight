@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function ProfileHeader() {
   const { user } = useSelector((state) => state.profile);
@@ -71,11 +71,19 @@ export default function ProfileHeader() {
             <p className="">{location}</p>
           </div>
         )}
-        <div className="mt-4 flex items-center">
-          <span className="mr-2">{following}</span>
-          <p className="mr-4">Following</p>
-          <span className="mr-2">{followers}</span>
-          <p className="mr-4">Followers</p>
+        <div className="mt-4 flex items-center text-gray-50 font-semibold">
+          <Link to="following">
+            <div className="flex">
+              <span className="mr-2">{following.length}</span>
+              <p className="mr-4">Following</p>
+            </div>
+          </Link>
+          <Link to="followers">
+            <div className="flex">
+              <span className="mr-2">{followers.length}</span>
+              <p className="mr-4">Followers</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

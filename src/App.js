@@ -6,6 +6,8 @@ import {
   Login,
   Profile,
   EditProfile,
+  Followers,
+  Following,
   Home,
   Notifications,
   Search,
@@ -25,7 +27,6 @@ function App() {
   useEffect(() => {
     if (status === "tokenReceived") {
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-      console.log("dispatching with userId: ", userId);
       dispatch(initializeUser(userId));
     }
     postsStatus === "idle" &&
@@ -34,7 +35,7 @@ function App() {
     // localStorage.removeItem("authUserToken");
     // localStorage.removeItem("authUserId");
     // localStorage.removeItem("isAuthenticated");
-  }, [status]);
+  }, [status, userId, userToken, postsStatus, dispatch]);
 
   return (
     <Routes>
@@ -55,6 +56,14 @@ function App() {
               <PrivateRoute
                 path="/profile/:profileUserId"
                 element={<Profile />}
+              />
+              <PrivateRoute
+                path="/profile/:profileUserId/followers"
+                element={<Followers />}
+              />
+              <PrivateRoute
+                path="/profile/:profileUserId/following"
+                element={<Following />}
               />
               <Route path="/profile/edit" element={<EditProfile />} />
               <Route path="/notifications" element={<Notifications />} />
