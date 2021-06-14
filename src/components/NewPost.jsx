@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateNewPostContent, createPost } from "../features/posts/postsSlice";
 
 export default function NewPost({ parent_post, placeholder }) {
-  const { newPostContent, status, error } = useSelector((state) => state.posts);
-  const { user, status: authStatus } = useSelector((state) => state.auth);
+  const { newPostContent } = useSelector((state) => state.posts);
+  const { user } = useSelector((state) => state.auth);
   const contentEl = useRef(null);
   const dispatch = useDispatch();
 

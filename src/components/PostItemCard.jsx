@@ -37,8 +37,6 @@ export default function PostItemCard({ post }) {
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
 
-  console.log(reposts);
-
   return (
     <Link to={`/post/${postId}`}>
       <div className="bg-gray-800 border-2 border-gray-600 p-4 pb-2 my-4 rounded-2xl">
@@ -87,7 +85,6 @@ export default function PostItemCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostReposted
                 ? dispatch(
                     unrepostPostById({ user_id: userId, post_id: postId })
@@ -119,7 +116,6 @@ export default function PostItemCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostLiked
                 ? dispatch(unlikePostById({ user_id: userId, post_id: postId }))
                 : dispatch(
@@ -147,7 +143,6 @@ export default function PostItemCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostSaved
                 ? dispatch(unsavePostById({ user_id: userId, post_id: postId }))
                 : dispatch(

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { followUserById, getUsers } from "../../services/search";
+import { getUsers } from "../../services/search";
 
 export const getAllUsers = createAsyncThunk("search/getAllUsers", async () => {
   try {
@@ -23,7 +23,6 @@ export const searchSlice = createSlice({
       state.status = "loading";
     },
     [getAllUsers.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.users = action.payload;
       state.status = "fulfilled";
     },
@@ -32,7 +31,5 @@ export const searchSlice = createSlice({
     },
   },
 });
-
-export const {} = searchSlice.actions;
 
 export default searchSlice.reducer;

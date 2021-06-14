@@ -12,9 +12,8 @@ export default function Notifications() {
     status === "idle" &&
       authStatus === "initComplete" &&
       dispatch(getNotifications(userId));
+    // eslint-disable-next-line
   }, [authStatus]);
-
-  console.log(notifications);
 
   const icon = {
     like: "heart-red",

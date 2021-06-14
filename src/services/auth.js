@@ -16,7 +16,6 @@ export const signupUser = async (variables) => {
     query: SIGNUP_USER,
     variables,
   });
-  console.log(response);
   return response;
 };
 
@@ -25,7 +24,6 @@ export const followUserById = async (variables) => {
     query: FOLLOW_USER,
     variables,
   });
-  console.log(response);
   return response.data.data.insert_follows_one;
 };
 
@@ -34,6 +32,5 @@ export const unfollowUserById = async (variables) => {
     query: UNFOLLOW_USER,
     variables,
   });
-  console.log(response);
   return response.data.data.delete_follows.returning[0];
 };

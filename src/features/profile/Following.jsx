@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "./profileSlice";
-import { followUser, logoutUser, unfollowUser } from "../auth/authSlice";
+import { followUser, unfollowUser } from "../auth/authSlice";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -18,9 +18,6 @@ export default function Following() {
     //eslint-disable-next-line
   }, [authStatus]);
 
-  console.log(user?.following);
-
-  console.log(user);
   return (
     <>
       {user && (

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function SidebarFooter() {
-  const { user, status } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { image_url, name, username } = user ? user : {};
   const names = name?.split(" ");
   const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";

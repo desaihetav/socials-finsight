@@ -122,10 +122,8 @@ export const postsSlice = createSlice({
   extraReducers: {
     [loadAllPosts.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [loadAllPosts.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       const { posts, reposts } = action.payload;
       const repostsFormatted = reposts.map((repost) => ({
         ...repost.post,
@@ -139,15 +137,12 @@ export const postsSlice = createSlice({
       state.posts = finalPosts;
     },
     [loadAllPosts.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [likePostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [likePostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.likes.push({
@@ -159,16 +154,13 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [likePostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [unlikePostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [unlikePostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
-      const { user_id, post_id } = action.payload;
+      const { post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.likes.splice(
         requiredPost.likes.findIndex((post) => post.id === post_id, 1)
@@ -177,15 +169,12 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [unlikePostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [savePostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [savePostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.saves.push({
@@ -197,16 +186,13 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [savePostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [unsavePostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [unsavePostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
-      const { user_id, post_id } = action.payload;
+      const { post_id } = action.payload;
       const requiredPost = state.posts.find((post) => post.id === post_id);
       requiredPost.saves.splice(
         requiredPost.saves.findIndex((post) => post.id === post_id, 1)
@@ -215,15 +201,12 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [unsavePostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [repostPostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [repostPostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       const { user, post } = action.payload;
       const requiredPost = state.posts.find(
         (postItem) => postItem.id === post.id
@@ -243,15 +226,12 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [repostPostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [unrepostPostById.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [unrepostPostById.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       const { user_id, post_id } = action.payload;
       const requiredPost = state.posts.find(
         (post) => post.id === post_id && !post.repost_user_id
@@ -267,21 +247,17 @@ export const postsSlice = createSlice({
       state.status = "fulfilled";
     },
     [unrepostPostById.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
     [createPost.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [createPost.fulfilled]: (state, action) => {
-      console.log("fulfilled");
       state.newPostContent = "";
       state.posts.push(action.payload);
       state.status = "fulfilled";
     },
     [createPost.rejected]: (state) => {
-      console.log("error");
       state.status = "error";
     },
   },

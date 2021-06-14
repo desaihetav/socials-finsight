@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { SidebarFooter, SidebarNavLink } from ".";
 
 export default function Sidebar() {
-  const { status, userId, userToken } = useSelector((state) => state.auth);
+  const { userId } = useSelector((state) => state.auth);
 
   return (
     <div className="sm:h-screen py-4 mx-4 sm:mx-0 bg-gradient-to-t from-gray-900 to-transparent">

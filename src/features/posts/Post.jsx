@@ -1,4 +1,3 @@
-import { current } from "immer";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { PostCard, PostItemCard } from "../../components";

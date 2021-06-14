@@ -1,18 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "./profileSlice";
-import { followUser, logoutUser, unfollowUser } from "../auth/authSlice";
+import { followUser, unfollowUser } from "../auth/authSlice";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export default function Followers() {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.profile);
-  const {
-    userId,
-    user: authUser,
-    status: authStatus,
-  } = useSelector((state) => state.auth);
+  const { userId, status: authStatus } = useSelector((state) => state.auth);
   const { profileUserId } = useParams();
 
   useEffect(() => {
@@ -22,9 +18,6 @@ export default function Followers() {
     //eslint-disable-next-line
   }, [authStatus]);
 
-  console.log(user?.following);
-
-  console.log(user);
   return (
     <>
       {user && (

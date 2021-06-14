@@ -10,7 +10,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.profile);
   const { userId, status: authStatus } = useSelector((state) => state.auth);
-  const { posts, status: postsStatus } = useSelector((state) => state.posts);
+  const { posts } = useSelector((state) => state.posts);
   const { profileUserId } = useParams();
 
   const logoutHandler = () => {
@@ -23,8 +23,6 @@ export default function Profile() {
       dispatch(getUserData(profileUserId));
     //eslint-disable-next-line
   }, [authStatus]);
-
-  console.log(user);
 
   return (
     <div>

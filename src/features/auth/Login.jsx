@@ -22,6 +22,7 @@ export default function Login() {
   useEffect(() => {
     dispatch(resetAuthStatus());
     isAuthenticated && navigate("/");
+    // eslint-disable-next-line
   }, [isAuthenticated, navigate]);
 
   return (

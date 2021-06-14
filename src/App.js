@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import {
-  Counter,
   Login,
   Signup,
   Profile,
@@ -71,7 +70,6 @@ function App() {
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/search" element={<Search />} />
               <PrivateRoute path="/post/:postId" element={<Post />} />
-              <Route path="/counter" element={<Counter />} />
             </Routes>
           </div>
         </div>

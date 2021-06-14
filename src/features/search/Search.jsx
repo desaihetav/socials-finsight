@@ -13,8 +13,7 @@ export default function Search() {
   useEffect(() => {
     status === "idle" &&
       authStatus === "initComplete" &&
-      dispatch(getAllUsers()) &&
-      console.log("dispatched");
+      dispatch(getAllUsers());
     //eslint-disable-next-line
   }, [authStatus]);
 
@@ -76,10 +75,6 @@ export default function Search() {
                             follower_id: user.id,
                             following_id: id,
                           };
-                          isFollowing
-                            ? console.log("unfollowing ", name)
-                            : console.log("following ", name);
-
                           isFollowing
                             ? dispatch(unfollowUser(variables))
                             : dispatch(followUser(variables));

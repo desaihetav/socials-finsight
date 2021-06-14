@@ -18,7 +18,6 @@ export const getPosts = async (user_id) => {
       user_id,
     },
   });
-  console.log(response);
   return response.data.data;
 };
 
@@ -51,7 +50,6 @@ export const unsavePost = async (variables) => {
     query: UNSAVE_POST,
     variables,
   });
-  console.log(response);
   return response.data.data.delete_saves.returning[0];
 };
 

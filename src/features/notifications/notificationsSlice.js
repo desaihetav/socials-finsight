@@ -26,7 +26,6 @@ export const notificationsSlice = createSlice({
       state.status = "loading";
     },
     [getNotifications.fulfilled]: (state, action) => {
-      console.log(action.payload);
       state.notifications = action.payload.notifications;
       state.status = "fulfilled";
     },

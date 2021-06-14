@@ -59,7 +59,6 @@ export const profileSlice = createSlice({
     },
     [updateUserData.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [updateUserData.fulfilled]: (state, action) => {
       state.status = "fulfilled";

@@ -16,6 +16,7 @@ export default function Signup() {
   useEffect(() => {
     dispatch(resetAuthStatus());
     isAuthenticated && navigate("/");
+    // eslint-disable-next-line
   }, [isAuthenticated, navigate]);
 
   const validateForm = () => {

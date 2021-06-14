@@ -88,7 +88,6 @@ export default function PostCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostReposted
                 ? dispatch(
                     unrepostPostById({ user_id: userId, post_id: postId })
@@ -120,7 +119,6 @@ export default function PostCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostLiked
                 ? dispatch(unlikePostById({ user_id: userId, post_id: postId }))
                 : dispatch(
@@ -148,7 +146,6 @@ export default function PostCard({ post }) {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("dispatcing with: ", userId, postId);
               isPostSaved
                 ? dispatch(unsavePostById({ user_id: userId, post_id: postId }))
                 : dispatch(

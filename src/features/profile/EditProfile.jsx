@@ -28,7 +28,6 @@ export default function EditProfile() {
   }, [authStatus]);
 
   const updateFieldHandler = (key, value) => {
-    console.log(key, value);
     dispatch(
       updateUserField({
         key,
@@ -41,7 +40,6 @@ export default function EditProfile() {
     <>
       {/* {status === "loading" && <h1>Loading...</h1>}
       {status === "error" && <h1>Error...</h1>} */}
-      {console.log(user)}
       {!user && <h1>Loading...</h1>}
       {user && (
         <div className="bg-gray-800 p-6 mt-4 rounded-2xl">

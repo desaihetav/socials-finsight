@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function ProfileHeader() {
-  const { user, status } = useSelector((state) => state.profile);
-  const { userId, status: authStatus } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const { userId } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { profileUserId } = useParams();
 
