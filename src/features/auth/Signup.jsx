@@ -11,21 +11,48 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(resetAuthStatus());
     isAuthenticated && navigate("/");
   }, [isAuthenticated, navigate]);
 
+  const validateForm = () => {
+    if (!/^[a-z0-9_-]{3,}$/i.test(name)) {
+      setErrorMessage("Invalid Name. Must be at least 3 characters long.");
+      return false;
+    }
+    if (!/^[a-z0-9_-]{3,20}$/i.test(username)) {
+      setErrorMessage(
+        "Invalid Username. Must be between 3 to 20 characters and not include spaces."
+      );
+      return false;
+    }
+    if (!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/i.test(email)) {
+      setErrorMessage("Invalid Email");
+      return false;
+    }
+    if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/i.test(email)) {
+      setErrorMessage(
+        "Invalid Password. Must be atleast 8 characters long and contain 1 uppercase, lowercase letter and number."
+      );
+      return false;
+    }
+    setErrorMessage("");
+    return true;
+  };
+
   const signupHandler = async () => {
-    await dispatch(
-      signupUserWithCredentials({
-        email,
-        password,
-        name,
-        username,
-      })
-    );
+    validateForm() &&
+      (await dispatch(
+        signupUserWithCredentials({
+          email,
+          password,
+          name,
+          username,
+        })
+      ));
   };
 
   return (
@@ -78,6 +105,11 @@ export default function Signup() {
             {status === "loading" ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
+        {errorMessage !== "" && (
+          <p className="fixed max-w-xs top-0 bg-red-600 bg-opacity-70 rounded-2xl py-3 px-6 font-semibold text-lg my-6">
+            {errorMessage}
+          </p>
+        )}
         {status === "error" && (
           <p className="fixed max-w-xs top-0 bg-red-600 bg-opacity-70 rounded-2xl py-3 px-6 font-bold text-xl my-6">
             {error}
