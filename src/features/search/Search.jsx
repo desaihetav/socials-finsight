@@ -29,68 +29,76 @@ export default function Search() {
       : users.filter((userItem) => userItem.id !== user.id);
 
   return (
-    <div>
-      <input
-        type="text"
-        value={searchTerm}
-        placeholder="Search User"
-        className="w-full font-medium text-xl bg-gray-700 py-2 px-4 my-4 rounded-xl"
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      {searchedUsers?.map(({ image_url, name, username, bio, id }) => {
-        const names = name?.split(" ");
-        const initials = names
-          ? (names[0][0] + names[1][0]).toUpperCase()
-          : "FS";
-        const isFollowing = user.following.includes(id);
-        return (
-          <Link key={id} to={`/profile/${id}`}>
-            <div className="flex bg-gray-800 p-4 rounded-2xl my-4">
-              <div className="h-14 w-14 rounded-2xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
-                {image_url ? (
-                  <img
-                    className="h-14 w-14 rounded-2xl"
-                    src={image_url}
-                    alt={name}
-                  />
-                ) : (
-                  <span className="font-bold text-2xl">{initials}</span>
-                )}
-              </div>
-              <div className="ml-4 flex flex-col justify-center w-full">
-                <div className="flex w-full items-center">
-                  <div className="flex flex-col">
-                    <h1 className="font-bold text-xl line-clamp-1">{name}</h1>
-                    <h2 className="text-gray-400 line-clamp-1">@{username}</h2>
+    <>
+      {searchedUsers && (
+        <div>
+          <input
+            type="text"
+            value={searchTerm}
+            placeholder="Search User"
+            className="w-full font-medium text-xl bg-gray-700 py-2 px-4 my-4 rounded-xl"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {searchedUsers?.map(({ image_url, name, username, bio, id }) => {
+            const names = name?.split(" ");
+            const initials = names
+              ? (names[0][0] + names[1][0]).toUpperCase()
+              : "FS";
+            const isFollowing = user.following.includes(id);
+            return (
+              <Link key={id} to={`/profile/${id}`}>
+                <div className="flex bg-gray-800 p-4 rounded-2xl my-4">
+                  <div className="h-14 w-14 rounded-2xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
+                    {image_url ? (
+                      <img
+                        className="h-14 w-14 rounded-2xl"
+                        src={image_url}
+                        alt={name}
+                      />
+                    ) : (
+                      <span className="font-bold text-2xl">{initials}</span>
+                    )}
                   </div>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const variables = {
-                        follower_id: user.id,
-                        following_id: id,
-                      };
-                      isFollowing
-                        ? console.log("unfollowing ", name)
-                        : console.log("following ", name);
+                  <div className="ml-4 flex flex-col justify-center w-full">
+                    <div className="flex w-full items-center">
+                      <div className="flex flex-col">
+                        <h1 className="font-bold text-xl line-clamp-1">
+                          {name}
+                        </h1>
+                        <h2 className="text-gray-400 line-clamp-1">
+                          @{username}
+                        </h2>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const variables = {
+                            follower_id: user.id,
+                            following_id: id,
+                          };
+                          isFollowing
+                            ? console.log("unfollowing ", name)
+                            : console.log("following ", name);
 
-                      isFollowing
-                        ? dispatch(unfollowUser(variables))
-                        : dispatch(followUser(variables));
-                    }}
-                    className={`ml-auto font-semibold px-3 py-1 border-gray-100 border-2 rounded-xl ${
-                      isFollowing && "bg-gray-100 text-gray-900"
-                    }`}
-                  >
-                    {isFollowing ? "Following" : "Follow"}
-                  </button>
+                          isFollowing
+                            ? dispatch(unfollowUser(variables))
+                            : dispatch(followUser(variables));
+                        }}
+                        className={`ml-auto font-semibold px-3 py-1 border-gray-100 border-2 rounded-xl ${
+                          isFollowing && "bg-gray-100 text-gray-900"
+                        }`}
+                      >
+                        {isFollowing ? "Following" : "Follow"}
+                      </button>
+                    </div>
+                    <p>{bio}</p>
+                  </div>
                 </div>
-                <p>{bio}</p>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   Counter,
   Login,
+  Signup,
   Profile,
   EditProfile,
   Followers,
@@ -40,6 +41,7 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
       <div className="bg-gray-900 min-h-screen text-gray-50 flex flex-col px-4">
         <div className="w-full max-w-7xl mx-auto flex">
           <div

@@ -18,6 +18,7 @@ export const getPosts = async (user_id) => {
       user_id,
     },
   });
+  console.log(response);
   return response.data.data;
 };
 

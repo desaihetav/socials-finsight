@@ -1,13 +1,32 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginUser, unfollowUserById } from "../../services/auth";
 import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { loginUser, signupUser, unfollowUserById } from "../../services/auth";
 import { getUser } from "../../services/profile";
 import { followUserById } from "../../services/auth";
 
 export const loginUserWithCredentials = createAsyncThunk(
   "auth/loginUserWithCredentials",
   async ({ email, password }) => {
-    const user = await loginUser({ email, password });
+    // const user = await loginUser({ email, password });
+    // return { token: user.token, id: user.id };
+    const response = await loginUser({ email, password });
+    if (response.data.errors) {
+      throw new Error(response.data.errors[0].message);
+    }
+    const user = response.data.data.login;
+
+    return { token: user.token, id: user.id };
+  }
+);
+
+export const signupUserWithCredentials = createAsyncThunk(
+  "auth/signupUserWithCredentials",
+  async (variables) => {
+    const response = await signupUser(variables);
+    if (response.data.errors) {
+      throw new Error(response.data.errors[0].message);
+    }
+    const user = response.data.data.signup;
     return { token: user.token, id: user.id };
   }
 );
@@ -62,7 +81,7 @@ export const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    logoutUser: (state) => {
+    logoutUser: () => {
       console.log("here");
       localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("authUserToken");
@@ -75,11 +94,14 @@ export const authSlice = createSlice({
         user: null,
       };
     },
+    resetAuthStatus: (state) => {
+      state.status = "idle";
+      state.error = null;
+    },
   },
   extraReducers: {
     [loginUserWithCredentials.pending]: (state) => {
       state.status = "loading";
-      console.log("pending");
     },
     [loginUserWithCredentials.fulfilled]: (state, action) => {
       const { token, id } = action.payload;
@@ -92,8 +114,30 @@ export const authSlice = createSlice({
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       state.status = "tokenReceived";
     },
-    [loginUserWithCredentials.error]: (state) => {
+    [loginUserWithCredentials.rejected]: (state, action) => {
+      console.log("error");
       state.status = "error";
+      state.error = action.error.message;
+    },
+    [signupUserWithCredentials.pending]: (state) => {
+      state.status = "loading";
+      console.log("pending");
+    },
+    [signupUserWithCredentials.fulfilled]: (state, action) => {
+      const { token, id } = action.payload;
+      state.userToken = token;
+      state.userId = id;
+      state.isAuthenticated = true;
+      localStorage.setItem("authUserToken", JSON.stringify(token));
+      localStorage.setItem("authUserId", JSON.stringify(id));
+      localStorage.setItem("isAuthenticated", JSON.stringify(true));
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      state.status = "tokenReceived";
+    },
+    [signupUserWithCredentials.rejected]: (state, action) => {
+      console.log(action);
+      state.status = "error";
+      state.error = action.error.message;
     },
     [initializeUser.pending]: (state) => {
       state.status = "loading";
@@ -140,6 +184,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logoutUser } = authSlice.actions;
+export const { resetAuthStatus, logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;

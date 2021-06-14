@@ -1,5 +1,6 @@
 export { default as Counter } from "./counter/Counter";
 export { default as Login } from "./auth/Login";
+export { default as Signup } from "./auth/Signup";
 export { default as Profile } from "./profile/Profile";
 export { default as EditProfile } from "./profile/EditProfile";
 export { default as Followers } from "./profile/Followers";

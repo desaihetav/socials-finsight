@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUserWithCredentials } from "../auth/authSlice";
+import { loginUserWithCredentials, resetAuthStatus } from "../auth/authSlice";
 
 export default function Login() {
-  const { status, isAuthenticated } = useSelector((state) => state.auth);
+  const { status, error, isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
 
   const loginHandler = async () => {
-    const response = await dispatch(
+    await dispatch(
       loginUserWithCredentials({
         email,
         password,
       })
     );
-    console.log(response);
-    if (response.error) {
-      setError(true);
-    }
   };
 
   useEffect(() => {
+    dispatch(resetAuthStatus());
     isAuthenticated && navigate("/");
   }, [isAuthenticated, navigate]);
 
@@ -41,7 +37,7 @@ export default function Login() {
         </p>
         <form className="w-full">
           <input
-            type="text"
+            type="email"
             value={email}
             placeholder="Email"
             className="font-medium text-xl bg-gray-800 py-3 px-4 my-2 rounded-xl w-full"
@@ -61,12 +57,21 @@ export default function Login() {
               loginHandler();
             }}
           >
-            Log In
+            {status === "loading" ? "Logging In..." : "Log In"}
+          </button>
+          <button
+            className="font-semibold text-lg py-3 px-4 mt-4 rounded-xl w-full"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/signup");
+            }}
+          >
+            Don't have an account? Sign Up
           </button>
         </form>
-        {error && (
-          <p className="fixed top-0 bg-red-600 bg-opacity-70 rounded-2xl py-3 px-6 font-bold text-2xl my-6">
-            Invalid Credentials
+        {status === "error" && (
+          <p className="fixed max-w-xs top-0 bg-red-600 bg-opacity-70 rounded-2xl py-3 px-6 font-bold text-xl my-6">
+            {error}
           </p>
         )}
       </div>
