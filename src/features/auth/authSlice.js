@@ -151,7 +151,7 @@ export const authSlice = createSlice({
       state.user = action.payload;
       state.status = "initComplete";
     },
-    [initializeUser.error]: (state) => {
+    [initializeUser.rejected]: (state) => {
       state.status = "error";
     },
     [followUser.pending]: (state) => {
@@ -161,7 +161,7 @@ export const authSlice = createSlice({
       state.user.following.push(action.payload.following_id);
       state.status = "fulfilled";
     },
-    [followUser.error]: (state) => {
+    [followUser.rejected]: (state) => {
       state.status = "error";
     },
     [unfollowUser.pending]: (state) => {
@@ -178,7 +178,7 @@ export const authSlice = createSlice({
       state.user.following = updatedFollowing;
       state.status = "fulfilled";
     },
-    [unfollowUser.error]: (state) => {
+    [unfollowUser.rejected]: (state) => {
       state.status = "error";
     },
   },
