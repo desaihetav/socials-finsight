@@ -36,7 +36,7 @@ export default function Followers() {
               const initials = names
                 ? (names[0][0] + names[1][0]).toUpperCase()
                 : "FS";
-              const isFollowing = user.following_user_ids.includes(id);
+              const isFollowing = user.following_user_ids?.includes(id);
               return (
                 <Link key={id} to={`/profile/${id}`}>
                   <div className="flex bg-gray-800 p-4 rounded-2xl my-4">

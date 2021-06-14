@@ -105,9 +105,9 @@ export default function EditProfile() {
             />
           </div>
           <div className="my-4 flex items-center opacity-80">
-            <span className="mr-2">{following}</span>
+            <span className="mr-2">{following.length}</span>
             <p className="mr-4">Following</p>
-            <span className="mr-2">{following}</span>
+            <span className="mr-2">{followers.length}</span>
             <p className="mr-4">Followers</p>
           </div>
           <button

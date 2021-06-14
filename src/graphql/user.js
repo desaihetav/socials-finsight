@@ -1,37 +1,41 @@
+const USER_FIELDS = `
+  id
+  name
+  email
+  username
+  bio
+  image_url
+  header_image_url
+  location
+  website_url
+  birth_date
+  created_at
+  followers {
+    follower_id
+    followers {
+      id
+      image_url
+      name
+      username
+      bio
+    }
+  }
+  following {
+    following_id
+    following {
+      id
+      image_url
+      name
+      username
+      bio
+    }
+  }
+`;
+
 export const GET_USER_BY_ID = `
   query ($id: uuid!) {
     users(where: { id: { _eq: $id } }) {
-      id
-      name
-      email
-      username
-      bio
-      image_url
-      header_image_url
-      location
-      website_url
-      birth_date
-      created_at
-      followers {
-        follower_id
-        followers {
-          id
-          image_url
-          name
-          username
-          bio
-        }
-      }
-      following {
-        following_id
-        following {
-          id
-          image_url
-          name
-          username
-          bio
-        }
-      }
+      ${USER_FIELDS}
     }
   }
 `;
@@ -40,16 +44,7 @@ export const UPDATE_USER_BY_ID = `
   mutation ($id: uuid!, $changes: users_set_input!) {
     update_users(where: { id: { _eq: $id } }, _set: $changes) {
       returning {
-        id
-        name
-        email
-        username
-        bio
-        image_url
-        header_image_url
-        location
-        website_url
-        birth_date
+        ${USER_FIELDS}
       }
     }
   }

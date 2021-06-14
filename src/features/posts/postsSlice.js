@@ -138,7 +138,7 @@ export const postsSlice = createSlice({
         .sort((a, b) => (new Date(b.created) > new Date(a.created) ? 1 : -1));
       state.posts = finalPosts;
     },
-    [loadAllPosts.error]: (state) => {
+    [loadAllPosts.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -158,7 +158,7 @@ export const postsSlice = createSlice({
       requiredPost.likes_aggregate.aggregate.count++;
       state.status = "fulfilled";
     },
-    [likePostById.error]: (state) => {
+    [likePostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -176,7 +176,7 @@ export const postsSlice = createSlice({
       requiredPost.likes_aggregate.aggregate.count--;
       state.status = "fulfilled";
     },
-    [unlikePostById.error]: (state) => {
+    [unlikePostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -196,7 +196,7 @@ export const postsSlice = createSlice({
       requiredPost.saves_aggregate.aggregate.count++;
       state.status = "fulfilled";
     },
-    [savePostById.error]: (state) => {
+    [savePostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -214,7 +214,7 @@ export const postsSlice = createSlice({
       requiredPost.saves_aggregate.aggregate.count--;
       state.status = "fulfilled";
     },
-    [unsavePostById.error]: (state) => {
+    [unsavePostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -242,7 +242,7 @@ export const postsSlice = createSlice({
       );
       state.status = "fulfilled";
     },
-    [repostPostById.error]: (state) => {
+    [repostPostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -266,7 +266,7 @@ export const postsSlice = createSlice({
       );
       state.status = "fulfilled";
     },
-    [unrepostPostById.error]: (state) => {
+    [unrepostPostById.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },
@@ -280,7 +280,7 @@ export const postsSlice = createSlice({
       state.posts.push(action.payload);
       state.status = "fulfilled";
     },
-    [createPost.error]: (state) => {
+    [createPost.rejected]: (state) => {
       console.log("error");
       state.status = "error";
     },

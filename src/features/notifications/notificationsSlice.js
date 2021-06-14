@@ -30,7 +30,7 @@ export const notificationsSlice = createSlice({
       state.notifications = action.payload.notifications;
       state.status = "fulfilled";
     },
-    [getNotifications.error]: (state) => {
+    [getNotifications.rejected]: (state) => {
       state.status = "error";
     },
   },

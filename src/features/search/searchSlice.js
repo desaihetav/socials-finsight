@@ -27,7 +27,7 @@ export const searchSlice = createSlice({
       state.users = action.payload;
       state.status = "fulfilled";
     },
-    [getAllUsers.error]: (state) => {
+    [getAllUsers.rejected]: (state) => {
       state.status = "error";
     },
   },

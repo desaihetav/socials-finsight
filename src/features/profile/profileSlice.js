@@ -54,7 +54,7 @@ export const profileSlice = createSlice({
       state.user = action.payload;
       state.status = "fulfilled";
     },
-    [getUserData.error]: (state) => {
+    [getUserData.rejected]: (state) => {
       state.status = "error";
     },
     [updateUserData.pending]: (state) => {
@@ -63,9 +63,17 @@ export const profileSlice = createSlice({
     },
     [updateUserData.fulfilled]: (state, action) => {
       state.status = "fulfilled";
+      const user = action.payload;
+      user.followers_user_ids = user.followers.map(
+        (follower) => follower.follower_id
+      );
+      user.following_user_ids = user.following.map(
+        (followingItem) => followingItem.following_id
+      );
       state.user = action.payload;
+      state.status = "fulfilled";
     },
-    [updateUserData.error]: (state) => {
+    [updateUserData.rejected]: (state) => {
       state.status = "error";
     },
   },

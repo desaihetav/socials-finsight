@@ -89,13 +89,13 @@ export default function ProfileHeader() {
             <div className="mt-4 flex items-center text-gray-50 font-semibold">
               <Link to="following">
                 <div className="flex">
-                  <span className="mr-2">{following.length}</span>
+                  <span className="mr-2">{following?.length}</span>
                   <p className="mr-4">Following</p>
                 </div>
               </Link>
               <Link to="followers">
                 <div className="flex">
-                  <span className="mr-2">{followers.length}</span>
+                  <span className="mr-2">{followers?.length}</span>
                   <p className="mr-4">Followers</p>
                 </div>
               </Link>

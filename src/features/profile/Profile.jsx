@@ -34,15 +34,15 @@ export default function Profile() {
       {status === "error" && <h1>Error...</h1>}
       {status === "fulfilled" && user && (
         <div className="mx-auto flex flex-col">
-          <ProfileHeader />
           {userId === profileUserId && (
             <button
-              className="mx-auto bg-red-600 py-2 px-4 mt-4 font-bold rounded-xl"
+              className="ml-auto bg-red-600 bg-opacity-70 py-2 px-4 mt-4 font-bold rounded-xl"
               onClick={logoutHandler}
             >
               Logout
             </button>
           )}
+          <ProfileHeader />
           {posts && (
             <div className="pt-4 pb-24">
               {posts

@@ -29,7 +29,7 @@ export default function Notifications() {
   };
 
   return (
-    <div>
+    <div className="mb-28">
       {notifications.map((notification) => (
         <div className="my-4 p-4 bg-gray-800 rounded-2xl flex">
           <img
