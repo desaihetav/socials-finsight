@@ -53,7 +53,7 @@ function App() {
               <img src="/icons/finsight.svg" alt="" />
             </div>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <PrivateRoute path="/" element={<Home />} />
               <PrivateRoute
                 path="/profile/:profileUserId"
                 element={<Profile />}
@@ -66,9 +66,9 @@ function App() {
                 path="/profile/:profileUserId/following"
                 element={<Following />}
               />
-              <Route path="/profile/edit" element={<EditProfile />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/search" element={<Search />} />
+              <PrivateRoute path="/profile/edit" element={<EditProfile />} />
+              <PrivateRoute path="/notifications" element={<Notifications />} />
+              <PrivateRoute path="/search" element={<Search />} />
               <PrivateRoute path="/post/:postId" element={<Post />} />
             </Routes>
           </div>
