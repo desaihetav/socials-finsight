@@ -20,7 +20,7 @@ export default function Signup() {
   }, [isAuthenticated, navigate]);
 
   const validateForm = () => {
-    if (!/^[a-z0-9_-]{3,}$/i.test(name)) {
+    if (!/^[a-z0-9_-\s]{3,}$/i.test(name)) {
       setErrorMessage("Invalid Name. Must be at least 3 characters long.");
       return false;
     }
@@ -34,7 +34,7 @@ export default function Signup() {
       setErrorMessage("Invalid Email");
       return false;
     }
-    if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/i.test(email)) {
+    if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/i.test(password)) {
       setErrorMessage(
         "Invalid Password. Must be atleast 8 characters long and contain 1 uppercase, lowercase letter and number."
       );
