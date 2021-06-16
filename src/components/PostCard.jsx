@@ -35,8 +35,10 @@ export default function PostCard({ post }) {
   const isPostSaved = saves.length;
   const isPostReposted = reposts.length;
 
-  const names = name?.split(" ");
-  const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
+  let tempInitials = "";
+  name?.split(" ").map((word) => (tempInitials += word[0]));
+
+  const initials = tempInitials.slice(0, 2).toUpperCase();
 
   const replyCount = posts.filter((post) => post.parent_post === postId).length;
 

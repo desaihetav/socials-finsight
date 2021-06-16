@@ -39,10 +39,9 @@ export default function Search() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {searchedUsers?.map(({ image_url, name, username, bio, id }) => {
-            const names = name?.split(" ");
-            const initials = names
-              ? (names[0][0] + names[1][0]).toUpperCase()
-              : "FS";
+            let tempInitials = "";
+            name?.split(" ").map((word) => (tempInitials += word[0]));
+            const initials = tempInitials.slice(0, 2).toUpperCase();
             const isFollowing = user.following.includes(id);
             return (
               <Link key={id} to={`/profile/${id}`}>

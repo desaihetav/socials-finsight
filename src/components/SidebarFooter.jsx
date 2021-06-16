@@ -4,8 +4,12 @@ import { NavLink } from "react-router-dom";
 export default function SidebarFooter() {
   const { user } = useSelector((state) => state.auth);
   const { image_url, name, username } = user ? user : {};
-  const names = name?.split(" ");
-  const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
+
+  let tempInitials = "";
+  name?.split(" ").map((word) => (tempInitials += word[0]));
+
+  const initials = tempInitials.slice(0, 2).toUpperCase();
+
   return (
     <div className="hover-hover:bg-gray-700 hover-hover:bg-opacity-40 w-full rounded-b-2xl p-4 border-t border-gray-700 transition-colors duration-300 cursor-pointer hidden sm:flex">
       <NavLink className="w-full" to={`/profile/${user?.id}`}>

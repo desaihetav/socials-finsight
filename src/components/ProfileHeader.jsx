@@ -18,8 +18,10 @@ export default function ProfileHeader() {
     following,
   } = user;
 
-  const names = name?.split(" ");
-  const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
+  let tempInitials = "";
+  name?.split(" ").map((word) => (tempInitials += word[0]));
+
+  const initials = tempInitials.slice(0, 2).toUpperCase();
 
   const editButtonHandler = () => {
     navigate("/profile/edit");

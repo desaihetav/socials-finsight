@@ -25,10 +25,9 @@ export default function Followers() {
           <p className="font-bold text-2xl my-4">{user.name}'s Followers</p>
           {user?.followers?.map(
             ({ followers: { id, image_url, name, username, bio } }) => {
-              const names = name?.split(" ");
-              const initials = names
-                ? (names[0][0] + names[1][0]).toUpperCase()
-                : "FS";
+              let tempInitials = "";
+              name?.split(" ").map((word) => (tempInitials += word[0]));
+              const initials = tempInitials.slice(0, 2).toUpperCase();
               const isFollowing = user.following_user_ids?.includes(id);
               return (
                 <Link key={id} to={`/profile/${id}`}>

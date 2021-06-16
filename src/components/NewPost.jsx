@@ -8,8 +8,10 @@ export default function NewPost({ parent_post, placeholder }) {
   const contentEl = useRef(null);
   const dispatch = useDispatch();
 
-  const names = user?.name?.split(" ");
-  const initials = names ? (names[0][0] + names[1][0]).toUpperCase() : "FS";
+  let tempInitials = "";
+  user?.name?.split(" ").map((word) => (tempInitials += word[0]));
+
+  const initials = tempInitials.slice(0, 2).toUpperCase();
 
   return (
     <>
