@@ -20,7 +20,7 @@ export default function Signup() {
   }, [isAuthenticated, navigate]);
 
   const validateForm = () => {
-    if (!/^[a-z0-9_-\s]{3,}$/i.test(name)) {
+    if (!/^[a-zA-Z\s]{3,}$/.test(name)) {
       setErrorMessage("Invalid Name. Must be at least 3 characters long.");
       return false;
     }
