@@ -30,12 +30,12 @@ export default function Search() {
   return (
     <>
       {searchedUsers && (
-        <div>
+        <div className="mb-28">
           <input
             type="text"
             value={searchTerm}
             placeholder="Search User"
-            className="w-full font-medium text-xl bg-gray-700 py-2 px-4 my-4 rounded-xl"
+            className="w-full font-medium text-xl bg-gray-700 py-2 px-4 mt-4 rounded-xl"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {searchedUsers?.map(({ image_url, name, username, bio, id }) => {
