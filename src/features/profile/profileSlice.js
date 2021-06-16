@@ -43,7 +43,6 @@ export const profileSlice = createSlice({
       state.status = "loading";
     },
     [getUserData.fulfilled]: (state, action) => {
-      // state.user = action.payload;
       const user = action.payload;
       user.followers_user_ids = user.followers.map(
         (follower) => follower.follower_id

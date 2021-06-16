@@ -32,9 +32,6 @@ function App() {
     postsStatus === "idle" &&
       status === "initComplete" &&
       dispatch(loadAllPosts(userId));
-    // localStorage.removeItem("authUserToken");
-    // localStorage.removeItem("authUserId");
-    // localStorage.removeItem("isAuthenticated");
   }, [status, userId, userToken, postsStatus, dispatch]);
 
   return (

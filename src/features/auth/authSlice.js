@@ -7,8 +7,6 @@ import { followUserById } from "../../services/auth";
 export const loginUserWithCredentials = createAsyncThunk(
   "auth/loginUserWithCredentials",
   async ({ email, password }) => {
-    // const user = await loginUser({ email, password });
-    // return { token: user.token, id: user.id };
     const response = await loginUser({ email, password });
     if (response.data.errors) {
       throw new Error(response.data.errors[0].message);
@@ -168,13 +166,10 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [unfollowUser.fulfilled]: (state, action) => {
-      console.log("unfollowing user....");
       const { following_id } = action.payload;
       const updatedFollowing = state.user.following.filter(
         (followingItem) => followingItem !== following_id
       );
-      console.log("following_id ", following_id);
-      console.log("updatedFollowing ", updatedFollowing);
       state.user.following = updatedFollowing;
       state.status = "fulfilled";
     },

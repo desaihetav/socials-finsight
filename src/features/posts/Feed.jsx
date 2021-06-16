@@ -5,8 +5,6 @@ export default function Feed() {
   const { user } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.posts);
 
-  console.log(user);
-
   const feedPosts = posts?.filter(
     (post) => !post.parent_post && user?.following?.includes(post.user_id)
   );
