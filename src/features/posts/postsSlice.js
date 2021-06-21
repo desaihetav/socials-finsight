@@ -255,6 +255,9 @@ export const postsSlice = createSlice({
     [createPost.fulfilled]: (state, action) => {
       state.newPostContent = "";
       state.posts.push(action.payload);
+      state.posts.sort((a, b) =>
+        new Date(b.created) > new Date(a.created) ? 1 : -1
+      );
       state.status = "fulfilled";
     },
     [createPost.rejected]: (state) => {

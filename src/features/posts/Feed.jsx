@@ -6,7 +6,9 @@ export default function Feed() {
   const { posts } = useSelector((state) => state.posts);
 
   const feedPosts = posts?.filter(
-    (post) => !post.parent_post && user?.following?.includes(post.user_id)
+    (post) =>
+      !post.parent_post &&
+      (user?.following?.includes(post.user_id) || post.user_id === user?.id)
   );
 
   return (
@@ -17,10 +19,16 @@ export default function Feed() {
         </p>
       )}
       {user &&
-        feedPosts &&
-        feedPosts.map((post, index) => (
-          <PostCard key={`${post.id}-${index}`} post={post} />
-        ))}
+        posts
+          ?.filter(
+            (post) =>
+              !post.parent_post &&
+              (user?.following?.includes(post.user_id) ||
+                post.user_id === user?.id)
+          )
+          .map((post, index) => (
+            <PostCard key={`${post.id}-${index}`} post={post} />
+          ))}
     </div>
   );
 }
