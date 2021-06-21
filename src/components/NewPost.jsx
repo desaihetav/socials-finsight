@@ -48,6 +48,7 @@ export default function NewPost({ parent_post, placeholder }) {
             }
           />
           <button
+            disabled={newPostContent === ""}
             onClick={() =>
               dispatch(
                 createPost({
@@ -57,7 +58,7 @@ export default function NewPost({ parent_post, placeholder }) {
                 })
               )
             }
-            className="py-2 px-4 bg-blue-600 font-semibold rounded-xl ml-auto mt-4"
+            className="py-2 px-4 bg-blue-600 font-semibold rounded-xl ml-auto mt-4 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Post
           </button>

@@ -9,6 +9,8 @@ module.exports = {
     },
   },
   variants: {
+    opacity: ({ after }) => after(["disabled"]),
+    cursor: ({ after }) => after(["disabled"]),
     extend: {},
   },
   plugins: [require("@tailwindcss/line-clamp")],
