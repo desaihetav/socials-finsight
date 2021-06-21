@@ -12,7 +12,8 @@ export default function Following() {
   const { profileUserId } = useParams();
 
   useEffect(() => {
-    status === "idle" &&
+    // status === "idle" &&
+    user.id !== profileUserId &&
       authStatus === "initComplete" &&
       dispatch(getUserData(profileUserId));
     //eslint-disable-next-line

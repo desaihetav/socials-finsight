@@ -18,11 +18,12 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    status === "idle" &&
+    // status === "idle" &&
+    user?.id !== profileUserId &&
       authStatus === "initComplete" &&
       dispatch(getUserData(profileUserId));
 
-    return () => dispatch(resetProfile());
+    // return () => dispatch(resetProfile());
 
     //eslint-disable-next-line
   }, [authStatus]);
