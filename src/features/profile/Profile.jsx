@@ -49,8 +49,9 @@ export default function Profile() {
               {posts
                 .filter(
                   (post) =>
-                    post.user_id === profileUserId ||
-                    post.repost_user_id === profileUserId
+                    !post.parent_post &&
+                    (post.user_id === profileUserId ||
+                      post.repost_user_id === profileUserId)
                 )
                 .map((post, index) => (
                   <PostCard key={`${post.id}-${index}`} post={post} />
