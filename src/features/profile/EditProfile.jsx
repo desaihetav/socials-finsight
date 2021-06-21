@@ -9,16 +9,18 @@ export default function EditProfile() {
   const dispatch = useDispatch();
   const history = createBrowserHistory();
 
-  const {
-    name,
-    image_url,
-    username,
-    bio,
-    website_url,
-    location,
-    followers,
-    following,
-  } = user;
+  // if (user) {
+  //   let {
+  //     name,
+  //     image_url,
+  //     username,
+  //     bio,
+  //     website_url,
+  //     location,
+  //     followers,
+  //     following,
+  //   } = user;
+  // }
 
   useEffect(() => {
     status === "idle" &&
@@ -45,32 +47,32 @@ export default function EditProfile() {
         <div className="bg-gray-800 p-6 mt-4 rounded-2xl">
           <div className="flex items-center w-full">
             <div className="h-16 w-16 rounded-3xl bg-gray-700 flex items-center justify-center">
-              {image_url ? (
+              {user.image_url ? (
                 <img
                   className="h-16 w-16 rounded-3xl"
-                  src={image_url}
-                  alt={name}
+                  src={user.image_url}
+                  alt={user.name}
                 />
               ) : (
                 <span className="font-bold text-2xl">
-                  {name?.slice(0, 2).toUpperCase()}
+                  {user.name?.slice(0, 2).toUpperCase()}
                 </span>
               )}
             </div>
             <div className="ml-4 flex flex-col flex-grow justify-center overflow-hidden">
               <input
                 type="text"
-                value={name}
+                value={user.name}
                 placeholder="Name"
                 className="font-bold text-xl bg-gray-700 py-2 px-3 mb-2 rounded-xl"
                 onChange={(e) => updateFieldHandler("name", e.target.value)}
               />
-              <span className="text-gray-300">@{username}</span>
+              <span className="text-gray-300">@{user.username}</span>
             </div>
           </div>
           <textarea
             type="text"
-            value={bio}
+            value={user.bio}
             placeholder="Bio"
             className="mt-4 font-semibold bg-gray-700 py-2 px-3 rounded-xl w-full"
             resize="vertical"
@@ -80,7 +82,7 @@ export default function EditProfile() {
             <img className="h-4 w-4 mr-2" src="/icons/link.svg" alt="link" />
             <input
               type="url"
-              value={website_url}
+              value={user.website_url}
               placeholder="Link (with https://)"
               className="bg-gray-700 py-2 px-3 rounded-xl w-full"
               onChange={(e) =>
@@ -96,16 +98,16 @@ export default function EditProfile() {
             />
             <input
               type="text"
-              value={location}
+              value={user.location}
               placeholder="Location"
               className="bg-gray-700 py-2 px-3 rounded-xl w-full"
               onChange={(e) => updateFieldHandler("location", e.target.value)}
             />
           </div>
           <div className="my-4 flex items-center opacity-80">
-            <span className="mr-2">{following.length}</span>
+            <span className="mr-2">{user.following.length}</span>
             <p className="mr-4">Following</p>
-            <span className="mr-2">{followers.length}</span>
+            <span className="mr-2">{user.followers.length}</span>
             <p className="mr-4">Followers</p>
           </div>
           <button
