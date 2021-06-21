@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "./profileSlice";
+import { getUserData, resetProfile } from "./profileSlice";
 import ProfileHeader from "../../components/ProfileHeader";
 import { logoutUser } from "../auth/authSlice";
 import { useParams } from "react-router";
@@ -21,6 +21,9 @@ export default function Profile() {
     status === "idle" &&
       authStatus === "initComplete" &&
       dispatch(getUserData(profileUserId));
+
+    return () => dispatch(resetProfile());
+
     //eslint-disable-next-line
   }, [authStatus]);
 

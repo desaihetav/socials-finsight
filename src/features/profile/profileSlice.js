@@ -37,6 +37,13 @@ export const profileSlice = createSlice({
       const { key, value } = action.payload;
       state.user[key] = value;
     },
+    resetProfile: () => {
+      return {
+        status: "idle",
+        error: "",
+        user: null,
+      };
+    },
   },
   extraReducers: {
     [getUserData.pending]: (state) => {
@@ -77,6 +84,6 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { updateUserField } = profileSlice.actions;
+export const { updateUserField, resetProfile } = profileSlice.actions;
 
 export default profileSlice.reducer;
